@@ -1,0 +1,25 @@
+# OS files
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.history/
+*.sublime-workspace
+
+# Full-size photo originals. The page uses the web-sized copies in photos/web/
+/photos/GrandCanyon.JPG
+/photos/Miami.JPG
+/photos/weibin-3.JPG
+/photos/ratchetcat.png
