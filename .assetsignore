@@ -1,0 +1,7 @@
+# Files in this repo that are not part of the website (same format as .gitignore)
+.git
+.gitignore
+.wrangler
+node_modules
+README.md
+wrangler.jsonc
