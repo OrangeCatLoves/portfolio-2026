@@ -54,12 +54,15 @@ The page already crops every photo to fit its frame, so no extra styling is need
 
 ## Deploy
 
-Wei Bin deploys this himself on Cloudflare Pages. Claude Code should push to GitHub and stop there.
+The site runs as a Cloudflare Worker named `portfolio-2026` (static files only, set up in `wrangler.jsonc`) and is served at weibinlow.com. Every push to `main` on GitHub deploys it automatically through Workers Builds. Claude Code should push to GitHub and stop there.
 
-Settings to use on Cloudflare Pages:
+Build settings, in the Cloudflare dashboard under Workers & Pages → portfolio-2026 → Settings → Builds:
 
-- Framework preset: None
-- Build command: `exit 0`
-- Build output directory: `/` (the repo root, where `index.html` is)
+- Git repository: `OrangeCatLoves/portfolio-2026`, production branch `main`
+- Build command: none
+- Deploy command: `npx wrangler deploy`
+- Root directory: `/`
 
-**Each file must be 25 MB or smaller, or Cloudflare Pages will not deploy it.** Check the two videos.
+If a push does not show up on the site, check that page for a "disconnected from your Git account" banner. Click **Manage** next to the repository and give the Cloudflare app access to this repo on GitHub, then push again.
+
+**Each file must be 25 MB or smaller, or Cloudflare will not deploy it.** Check the two videos.
