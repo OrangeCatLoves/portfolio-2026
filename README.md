@@ -10,6 +10,7 @@ This page is finished. **Do not rewrite it or split it into a framework.** Make 
 
 - `photos/` holds every photo.
 - `videos/` holds the two project demo videos.
+- `logos/` holds the three company logos shown on the Experience boarding passes.
 
 ## Where each file goes
 
@@ -18,8 +19,11 @@ This page is finished. **Do not rewrite it or split it into a framework.** Make 
 | `photos/weibin-1` | First page, photo 1 | search `Your photo 1` |
 | `photos/weibin-2` | First page, photo 2 | search `Your photo 2` |
 | `photos/weibin-3` | First page, photo 3 | search `Your photo 3` |
-| `photos/dog.png` | About me, first small frame | search `class="ab-ph"` |
-| `photos/ratchetcat.png` | About me, second small frame | search `ab-ph2` |
+| `photos/dog.png` | About me, first card (Professor Woof) | search `hc-dog` |
+| `photos/web/ratchetcat.jpg` | About me, second card (OrangeRatchetCat) | search `hc-cat` |
+| `logos/shopback.jpg` | Experience, ShopBack boarding pass | search `logos/shopback` |
+| `logos/continental.jpg` | Experience, Continental (AUMOVIO) boarding pass | search `logos/continental` |
+| `logos/growthbeans.jpg` | Experience, Growthbeans boarding pass | search `logos/growthbeans` |
 | 15 photos named after places | Exchange photo grid | search `class="xph"` |
 | GuessTheFlag video | Projects, first video frame | search `GuessTheFlag video goes here` |
 | OurUniverse video | Projects, second video frame | search `OurUniverse video goes here` |
@@ -31,7 +35,8 @@ UMD (University of Maryland), Washington D.C., Philadelphia, New York, Boston, T
 ## How to swap a file in
 
 - **First page photo:** replace `<div class="slot">Your photo 1</div>` with `<img src="photos/FILE" alt="Low Wei Bin">`.
-- **About me photo:** replace `<span class="slot">Photo</span>` inside the frame with `<img src="photos/FILE" alt="">`.
+- **About me photo:** change the `src` of the `<img>` inside the card's `<span class="hart">`.
+- **Company logo:** change the `data-src` of the `<img>` inside `<span class="pass-logo nologo">`. The page loads it and only shows the logo once it has loaded, so a missing file hides the logo instead of showing a broken image.
 - **Exchange photo:** replace `<span class="slot">Photo</span>` inside the button with `<img src="photos/FILE" alt="PLACE NAME">`. Keep the caption span after it.
 - **Video:** replace the whole `<div class="slot">…</div>` inside `<figure class="vid">` with `<video src="videos/FILE" autoplay muted loop playsinline></video>`.
 
