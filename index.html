@@ -413,7 +413,7 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 .pp-visa-pg .pp-pn{left:48px}
 .pp-visa-holo{position:absolute;left:0;top:0;bottom:0;width:24px;background:linear-gradient(180deg,#F9D2E6,#CFF3E7,#D3E1FF,#F2E0BD,#F9D2E6);background-size:100% 220%;animation:ppHolo 6s linear infinite;box-shadow:inset -1px 0 0 rgba(0,0,0,.08)}
 /* one type scale for the visa: small grey mono labels; 12px words (names in bold); 11px grey for secondary words (the line under a name, the years) */
-.pp-visa-f{margin:0;display:grid;gap:15px}
+.pp-visa-f{margin:0;display:grid;gap:12px}
 .pp-visa-f dt{margin-bottom:8px;font-family:var(--mono);font-weight:500;font-size:9px;line-height:1;letter-spacing:.16em;text-transform:uppercase;color:#5B6790}
 .pp-visa-f dd{margin:0;font-weight:500;font-size:12px;line-height:1.4;color:#2E3B6B}
 .pp-visa-f b{font-weight:700;color:#17265A}
@@ -422,7 +422,7 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 .pp-focus span+span::before{content:"·";margin:0 7px;font-weight:500;color:#8A93B5}
 /* a row: the logo (every one as wide as the Continental one, the taller ones capped), then the words. The logo is centred on
    the words beside it, whether that is one line or a name and the line under it */
-.pp-wx{display:grid;gap:10px}
+.pp-wx{display:grid;gap:8px}
 .pp-wx li{display:grid;grid-template-columns:74px minmax(0,1fr);align-items:center;column-gap:8px}
 .pp-wx img{display:block;width:70px;height:auto;max-height:28px;object-fit:contain;object-position:left center;mix-blend-mode:multiply}
 .pp-l1{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
@@ -430,7 +430,7 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 .pp-sub{display:block;margin-top:1px;font-weight:500;font-size:11px;line-height:1.35;color:#5B6790}
 /* Education: the module codes by genre (Foundations, Systems & Software, Math & Stats, Others), each genre in its own ink.
    The genre's name sits in the logo column, level with the first row of its codes */
-.pp-mods{display:grid;gap:6px;margin-top:12px}
+.pp-mods{display:grid;gap:6px;margin-top:10px}
 .pp-mg{display:grid;grid-template-columns:74px minmax(0,1fr);column-gap:8px;align-items:start}
 .pp-mg-l{padding-top:7px;font-family:var(--mono);font-weight:500;font-size:8px;line-height:1.3;letter-spacing:.12em;text-transform:uppercase;color:var(--mc)}
 .pp-mg ul{display:flex;flex-wrap:wrap;gap:5px}
@@ -1020,9 +1020,9 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
               <div><dt>Focus</dt><dd class="pp-focus"><span>Backend engineering</span><span>Scalable systems</span><span>System design</span></dd></div>
               <div><dt>Work Experience</dt><dd>
                 <ul class="pp-wx">
-                  <li><img src="logos/shopback.jpg" alt="ShopBack"><span>January 2027 – June 2027</span></li>
-                  <li><img src="logos/continental.jpg" alt="Continental"><span>June 2026 – December 2026</span></li>
-                  <li><img src="logos/growthbeans.jpg" alt="Growthbeans"><span>May 2025 – August 2025</span></li>
+                  <li><img src="logos/shopback.jpg" alt="ShopBack"><span>January 2027 – June 2027<small class="pp-sub">Software Engineering Intern</small></span></li>
+                  <li><img src="logos/continental.jpg" alt="Continental"><span>June 2026 – December 2026<small class="pp-sub">Software Engineering Intern</small></span></li>
+                  <li><img src="logos/growthbeans.jpg" alt="Growthbeans"><span>May 2025 – August 2025<small class="pp-sub">Software Developer Intern</small></span></li>
                   <li><img src="logos/nus.jpg" alt="NUS"><span>January 2026 – November 2026<small class="pp-sub">Teaching Assistant, CS4218 - Software Testing</small></span></li>
                 </ul>
               </dd></div>
