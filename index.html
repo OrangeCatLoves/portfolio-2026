@@ -418,12 +418,13 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 /* the internships, newest first: the logo as tall as the words, then the dates and the company */
 .pp-wx{display:grid;gap:8px}
 .pp-wx li{display:grid;grid-template-columns:74px minmax(0,1fr);align-items:center;column-gap:8px;font-weight:500;font-size:12.5px;line-height:1.35;color:#2E3B6B}
-.pp-wx img{display:block;height:13px;width:auto;max-width:74px;mix-blend-mode:multiply}
+/* every logo as wide as the Continental one, so the four read at the same size (the taller ones are capped) */
+.pp-wx img{display:block;width:70px;height:auto;max-height:28px;object-fit:contain;object-position:left center;mix-blend-mode:multiply}
 .pp-wx b,.pp-visa-f dd b{font-weight:700;color:#17265A}
 /* Education: the degree, then the module codes by genre (Foundations, Systems & Software, Math & Stats, Others), each genre in its own ink */
 .pp-edu{display:grid;grid-template-columns:74px minmax(0,1fr);align-items:center;column-gap:8px}
 .pp-edu-dt{display:flex;justify-content:space-between;align-items:baseline}
-.pp-edu img{display:block;height:13px;width:auto;max-width:74px;mix-blend-mode:multiply}
+.pp-edu img{display:block;width:70px;height:auto;max-height:28px;object-fit:contain;object-position:left center;mix-blend-mode:multiply}
 .pp-edu-y{letter-spacing:.08em;text-transform:none}
 .pp-edu-d{display:block;margin:2px 0 0 82px;font-weight:500;font-size:12.5px;line-height:1.35;color:#2E3B6B}
 .pp-mods{display:grid;gap:6px;margin-top:9px}
@@ -608,9 +609,11 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
   .pp-visa-pg .pp-in{padding-left:42px}
   .pp-wx li{grid-template-columns:66px minmax(0,1fr);font-size:12px}
   .pp-wx span b{display:block}
+  .pp-wx br{display:none}
   .pp-gm-st .pp-st+.pp-st{left:auto!important;right:6px}
   .pp-setl li{font-size:20px;white-space:nowrap}
-  .pp-wx img{max-width:66px;height:12px}
+  .pp-wx img{width:62px}
+  .pp-edu img{width:62px}
   .pp-clip{height:auto;aspect-ratio:16/9;margin-top:16px}
   .pp-widow{height:210px;top:34px}
   .lt{grid-template-columns:minmax(0,1fr);gap:16px;padding:10vh 6vw 6vh;align-content:center}
