@@ -409,42 +409,49 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 /* Software Engineer: the visa, and the stamps of what I build with */
 /* Software Engineer: the whole left page is the visa (its paper, and the hologram strip down the outer edge) */
 .pp-visa-pg{background-color:#E4EEE8;background-image:repeating-radial-gradient(circle at 70% 30%,rgba(46,125,91,.07) 0 1px,transparent 1px 6px),repeating-radial-gradient(circle at 20% 90%,rgba(31,58,138,.06) 0 1px,transparent 1px 8px),linear-gradient(135deg,#E8F2EC,#DCE8F3)}
-.pp-visa-pg .pp-in{left:48px}
+.pp-visa-pg .pp-in{left:48px;right:30px}
 .pp-visa-pg .pp-pn{left:48px}
 .pp-visa-holo{position:absolute;left:0;top:0;bottom:0;width:24px;background:linear-gradient(180deg,#F9D2E6,#CFF3E7,#D3E1FF,#F2E0BD,#F9D2E6);background-size:100% 220%;animation:ppHolo 6s linear infinite;box-shadow:inset -1px 0 0 rgba(0,0,0,.08)}
-.pp-visa-f{margin:0;display:grid;gap:12px}
-.pp-visa-f dt{margin-bottom:6px;font-family:var(--mono);font-weight:500;font-size:9px;line-height:1;letter-spacing:.16em;text-transform:uppercase;color:#5B6790}
-.pp-visa-f dd{margin:0;font-weight:700;font-size:14px;line-height:1.4;color:#17265A}
-/* the internships, newest first: the logo as tall as the words, then the dates and the company */
-.pp-wx{display:grid;gap:8px}
-.pp-wx li{display:grid;grid-template-columns:74px minmax(0,1fr);align-items:center;column-gap:8px;font-weight:500;font-size:12.5px;line-height:1.35;color:#2E3B6B}
-/* every logo as wide as the Continental one, so the four read at the same size (the taller ones are capped) */
+/* one type scale for the visa: small grey mono labels; 12px words (names in bold); 11px grey for secondary words (the line under a name, the years) */
+.pp-visa-f{margin:0;display:grid;gap:15px}
+.pp-visa-f dt{margin-bottom:8px;font-family:var(--mono);font-weight:500;font-size:9px;line-height:1;letter-spacing:.16em;text-transform:uppercase;color:#5B6790}
+.pp-visa-f dd{margin:0;font-weight:500;font-size:12px;line-height:1.4;color:#2E3B6B}
+.pp-visa-f b{font-weight:700;color:#17265A}
+.pp-focus{display:flex;flex-wrap:wrap}
+.pp-focus span{white-space:nowrap}
+.pp-focus span+span::before{content:"·";margin:0 7px;font-weight:500;color:#8A93B5}
+/* a row: the logo (every one as wide as the Continental one, the taller ones capped), then the words. The logo is centred on
+   the words beside it, whether that is one line or a name and the line under it */
+.pp-wx{display:grid;gap:10px}
+.pp-wx li{display:grid;grid-template-columns:74px minmax(0,1fr);align-items:center;column-gap:8px}
 .pp-wx img{display:block;width:70px;height:auto;max-height:28px;object-fit:contain;object-position:left center;mix-blend-mode:multiply}
-.pp-wx b,.pp-visa-f dd b{font-weight:700;color:#17265A}
-/* Education: the degree, then the module codes by genre (Foundations, Systems & Software, Math & Stats, Others), each genre in its own ink */
-/* the university row: the logo centred on the name and the degree together, the years level with the name */
-.pp-edu{display:grid;grid-template-columns:74px minmax(0,1fr) auto;grid-template-rows:auto auto;align-items:center;column-gap:8px}
-.pp-edu img{grid-row:1 / 3}
-/* the teaching assistant row: its logo sits level with the role, under the dates */
-/* the teaching assistant row: the logo starts level with the role (the line after the dates) */
-.pp-wx-ta img{align-self:start;margin-top:.95em}
-.pp-edu img{display:block;width:70px;height:auto;max-height:28px;object-fit:contain;object-position:left center;mix-blend-mode:multiply}
-.pp-edu-n{font-size:12.5px;white-space:nowrap}
-.pp-edu-y{font-family:var(--mono);font-weight:500;font-size:9px;letter-spacing:.04em;margin-left:6px;color:#5B6790;white-space:nowrap}
-.pp-edu-d{grid-column:2 / 4;display:block;margin-top:2px;font-weight:500;font-size:12.5px;line-height:1.35;color:#2E3B6B}
-.pp-mods{display:grid;gap:6px;margin-top:9px}
+.pp-l1{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.pp-yr{flex:none;font-size:11px;color:#5B6790}
+.pp-sub{display:block;margin-top:1px;font-weight:500;font-size:11px;line-height:1.35;color:#5B6790}
+/* Education: the module codes by genre (Foundations, Systems & Software, Math & Stats, Others), each genre in its own ink.
+   The genre's name sits in the logo column, level with the first row of its codes */
+.pp-mods{display:grid;gap:6px;margin-top:12px}
 .pp-mg{display:grid;grid-template-columns:74px minmax(0,1fr);column-gap:8px;align-items:start}
-.pp-mg-l{padding-top:4px;font-family:var(--mono);font-weight:500;font-size:8px;line-height:1.3;letter-spacing:.12em;text-transform:uppercase;color:var(--mc)}
+.pp-mg-l{padding-top:7px;font-family:var(--mono);font-weight:500;font-size:8px;line-height:1.3;letter-spacing:.12em;text-transform:uppercase;color:var(--mc)}
 .pp-mg ul{display:flex;flex-wrap:wrap;gap:5px}
 .pp-mg.g-f{--mc:#1F3A8A}.pp-mg.g-s{--mc:#2E7D5B}.pp-mg.g-m{--mc:#6B3FA0}.pp-mg.g-o{--mc:#B8322A}
 .pp-mod{margin:0;padding:4px 6px 3px;border:1.5px solid var(--mc);border-radius:4px;background:rgba(255,255,255,.5);color:var(--mc);font-family:var(--mono);font-weight:500;font-size:10px;line-height:1;letter-spacing:.05em;cursor:default;transition:background .15s,color .15s,transform .15s}
 .pp-mod:hover,.pp-mod:focus-visible,.pp-mod.on{background:var(--mc);color:#fff;transform:translateY(-1px)}
-.pp-mod-t{margin-top:8px;min-height:1.35em;font-weight:500;font-size:12px;line-height:1.35;font-style:italic;color:#7A6F55}
-.pp-mod-t.set{font-style:normal;font-weight:700;color:#17265A}
-.pp-stamps,.pp-places{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;align-content:flex-start}
-.pp-stamps{gap:16px 10px;padding:6px 0}
+/* the chosen module's title, in the column of the codes */
+.pp-mod-t{margin:8px 0 0 82px;min-height:1.4em;font-size:12px;line-height:1.4;color:#5B6790}
+.pp-mod-t.set{font-weight:700;color:#17265A}.pp-places{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;align-content:flex-start}
 .pp-places{gap:10px 7px;padding:2px 0}
-.pp-stamps .pp-st,.pp-places .pp-st{position:relative}
+.pp-places .pp-st{position:relative}
+/* Familiar with: a small label and a dashed rule for each kind, then its stamps */
+.pp-stk{display:grid;gap:18px}
+.pp-sg-l{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-family:var(--mono);font-weight:500;font-size:9px;line-height:1;letter-spacing:.16em;text-transform:uppercase;color:#5B6790}
+.pp-sg-l::after{content:"";flex:1;border-top:1px dashed rgba(122,111,85,.4)}
+.pp-sg-s{display:flex;flex-wrap:wrap;align-items:center;gap:12px 12px;padding:0 4px}
+.pp-sg .pp-st{position:relative;padding:7px 12px;font-size:12px}
+.pp-sg .pp-st.ov{padding:10px 16px}
+.pp-sg .pp-st.ci{width:58px;height:58px;padding:0}
+/* Backend: two stamps a row, in two columns, so neither row is left with one */
+.pp-sg-2{display:grid;grid-template-columns:repeat(2,max-content);justify-items:start}
 .pp-places .pp-st{padding:6px 9px;font-size:10.5px;letter-spacing:.1em}
 .pp-places .pp-st small{margin-top:2px;font-size:7px;letter-spacing:.16em}
 .pp-places .pp-st.ov{padding:9px 13px}
@@ -612,16 +619,12 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
   .pp-mrz{position:relative;margin-top:14px;font-size:9.5px}
   .ab-cards{--k:.5;height:276px}
   .pp-visa-pg .pp-in{padding-left:42px}
-  .pp-wx li{grid-template-columns:74px minmax(0,1fr);font-size:12px}
-  .pp-wx span b{display:block}
-  .pp-wx br{display:none}
+  .pp-at{display:block}
+  .pp-focus{flex-direction:column}
+  .pp-focus span+span::before{content:none}
   .pp-gm-st .pp-st+.pp-st{left:auto!important;right:6px}
   .pp-setl li{font-size:20px;white-space:nowrap}
   .pp-wx img{width:62px}
-  .pp-edu img{width:62px}
-  .pp-edu-n{white-space:normal}
-  .pp-edu-y{align-self:start;margin-top:3px}
-  .pp-wx-ta img{margin-top:2.3em}
   .pp-clip{height:auto;aspect-ratio:16/9;margin-top:16px}
   .pp-widow{height:210px;top:34px}
   .lt{grid-template-columns:minmax(0,1fr);gap:16px;padding:10vh 6vw 6vh;align-content:center}
@@ -1015,18 +1018,18 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
           <div class="pp-in">
             <div class="pp-hd"><span>Visas</span><span>Software Engineer</span></div>
             <dl class="pp-visa-f">
-              <div><dt>Focus</dt><dd>Backend engineering · Scalable systems · System design</dd></div>
+              <div><dt>Focus</dt><dd class="pp-focus"><span>Backend engineering</span><span>Scalable systems</span><span>System design</span></dd></div>
               <div><dt>Work Experience</dt><dd>
                 <ul class="pp-wx">
-                  <li><img src="logos/shopback.jpg" alt="ShopBack"><span>January 2027 – June 2027 <b>@ShopBack</b></span></li>
-                  <li><img src="logos/continental.jpg" alt="Continental"><span>June 2026 – December 2026 <b>@Continental</b></span></li>
-                  <li><img src="logos/growthbeans.jpg" alt="Growthbeans"><span>May 2025 – August 2025 <b>@Growthbeans</b></span></li>
-                  <li class="pp-wx-ta"><img src="logos/nus.jpg" alt="NUS"><span>January 2026 – November 2026 <b>@NUS</b><br>Teaching Assistant, CS4218 - Software Testing</span></li>
+                  <li><img src="logos/shopback.jpg" alt="ShopBack"><span>January 2027 – June 2027 <b class="pp-at">@ShopBack</b></span></li>
+                  <li><img src="logos/continental.jpg" alt="Continental"><span>June 2026 – December 2026 <b class="pp-at">@Continental</b></span></li>
+                  <li><img src="logos/growthbeans.jpg" alt="Growthbeans"><span>May 2025 – August 2025 <b class="pp-at">@Growthbeans</b></span></li>
+                  <li><img src="logos/nus.jpg" alt="NUS"><span>January 2026 – November 2026 <b class="pp-at">@NUS</b><small class="pp-sub">Teaching Assistant, CS4218 - Software Testing</small></span></li>
                 </ul>
               </dd></div>
               <!-- Education: point at (or tap) a module code and its title shows in the line under the codes -->
               <div><dt>Education</dt><dd>
-                <span class="pp-edu"><img src="logos/nus.jpg" alt=""><span class="pp-edu-n">National University of Singapore</span><span class="pp-edu-y">2023 – 2027</span><span class="pp-edu-d">Bachelor of Computing, Computer Science</span></span>
+                <ul class="pp-wx"><li><img src="logos/nus.jpg" alt=""><span><span class="pp-l1"><b>National University of Singapore</b><span class="pp-yr">2023 – 2027</span></span><small class="pp-sub">Bachelor of Computing, Computer Science</small></span></li></ul>
                 <div class="pp-mods" aria-label="Modules, by genre">
                   <div class="pp-mg g-f"><span class="pp-mg-l">Foundations</span><ul><li><button class="pp-mod" type="button" data-t="Programming Methodology">CS1101S</button></li><li><button class="pp-mod" type="button" data-t="Discrete Structures">CS1231S</button></li><li><button class="pp-mod" type="button" data-t="Programming Methodology II">CS2030S</button></li><li><button class="pp-mod" type="button" data-t="Data Structures and Algorithms">CS2040S</button></li><li><button class="pp-mod" type="button" data-t="Database Systems">CS2102</button></li><li><button class="pp-mod" type="button" data-t="Introduction to Computer Networks">CS2105</button></li></ul></div>
                   <div class="pp-mg g-s"><span class="pp-mg-l">Systems &amp; Software</span><ul><li><button class="pp-mod" type="button" data-t="Computer Organisation">CS2100</button></li><li><button class="pp-mod" type="button" data-t="Software Engineering">CS2103T</button></li><li><button class="pp-mod" type="button" data-t="Introduction to Operating Systems">CS2106</button></li><li><button class="pp-mod" type="button" data-t="Introduction to Information Security">CS2107</button></li><li><button class="pp-mod" type="button" data-t="Foundation of Software Engineering">CS3213</button></li><li><button class="pp-mod" type="button" data-t="Software Testing">CS4218</button></li><li><button class="pp-mod" type="button" data-t="Big Data Systems for Data Science">CS4225</button></li><li><button class="pp-mod" type="button" data-t="Internet Architecture">CS4226</button></li></ul></div>
@@ -1046,22 +1049,12 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
         <div class="pp-pg pp-ff" data-t="1" aria-hidden="true">
           <div class="pp-in">
             <div class="pp-hd"><span>Familiar with</span><span>Stamps</span></div>
-            <div class="pp-stamps">
-              <span class="pp-st ink-n" style="rotate:-7deg">Python</span>
-              <span class="pp-st ov ink-r" style="rotate:6deg">Java</span>
-              <span class="pp-st ci ink-g" style="rotate:-6deg">Go</span>
-              <span class="pp-st ink-p" style="rotate:4deg">TypeScript</span>
-              <span class="pp-st ov ink-b" style="rotate:-5deg">JavaScript</span>
-              <span class="pp-st ov ink-n" style="rotate:-9deg">SQL</span>
-              <span class="pp-st ink-r" style="rotate:7deg">React.js</span>
-              <span class="pp-st ov ink-g" style="rotate:-4deg">Redis</span>
-              <span class="pp-st ov ink-p" style="rotate:5deg">Node.js</span>
-              <span class="pp-st ink-b" style="rotate:-6deg">Django</span>
-              <span class="pp-st ci ink-n" style="rotate:8deg">REST</span>
-              <span class="pp-st ov ink-g" style="rotate:-5deg">Next.js</span>
-              <span class="pp-st ink-b" style="rotate:6deg">Spring Boot</span>
-              <span class="pp-st ov ink-p" style="rotate:-4deg">PostgreSQL</span>
-              <span class="pp-st ink-r" style="rotate:5deg">Docker</span>
+            <!-- the stamps by kind, each kind in one ink -->
+            <div class="pp-stk">
+              <div class="pp-sg"><p class="pp-sg-l">Languages</p><div class="pp-sg-s"><span class="pp-st ink-n" style="rotate:-5deg">Python</span><span class="pp-st ov ink-n" style="rotate:4deg">Java</span><span class="pp-st ci ink-n" style="rotate:-3deg">Go</span><span class="pp-st ink-n" style="rotate:5deg">TypeScript</span><span class="pp-st ov ink-n" style="rotate:-4deg">JavaScript</span><span class="pp-st ink-n" style="rotate:3deg">SQL</span></div></div>
+              <div class="pp-sg"><p class="pp-sg-l">Frontend</p><div class="pp-sg-s"><span class="pp-st ink-r" style="rotate:-5deg">React.js</span><span class="pp-st ov ink-r" style="rotate:4deg">Next.js</span></div></div>
+              <div class="pp-sg"><p class="pp-sg-l">Backend</p><div class="pp-sg-s pp-sg-2"><span class="pp-st ink-g" style="rotate:-5deg">Node.js</span><span class="pp-st ov ink-g" style="rotate:4deg">Django</span><span class="pp-st ink-g" style="rotate:-3deg">Spring Boot</span><span class="pp-st ov ink-g" style="rotate:5deg">REST</span></div></div>
+              <div class="pp-sg"><p class="pp-sg-l">Data &amp; Infrastructure</p><div class="pp-sg-s"><span class="pp-st ink-p" style="rotate:-5deg">PostgreSQL</span><span class="pp-st ov ink-p" style="rotate:4deg">Redis</span><span class="pp-st ink-p" style="rotate:-3deg">Docker</span></div></div>
             </div>
           </div>
           <span class="pp-pn">04</span>
