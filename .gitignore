@@ -26,3 +26,6 @@ $RECYCLE.BIN/
 
 # Full-size video original. The page uses the compressed copy, videos/minitude.mp4 (Cloudflare refuses files over 25 MB)
 /videos/minitude-original.mp4
+
+# Full-size About photos. The page uses the web-sized copies in photos/web/aboutme/
+/photos/aboutme/

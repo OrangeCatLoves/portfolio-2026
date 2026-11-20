@@ -12,8 +12,6 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
-<!-- only the five characters on the mahjong tiles -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&text=%E4%B8%AD%E7%99%BC%E6%9D%B1%E4%B8%80%E8%90%AC&display=swap" rel="stylesheet">
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *,*::before,*::after{box-sizing:inherit}
@@ -177,7 +175,8 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 #a-proj .stage{background-color:#EDE5D4;background-image:radial-gradient(ellipse at 50% -12%,rgba(255,255,255,.8),transparent 62%),radial-gradient(ellipse at 50% 125%,rgba(120,90,40,.2),transparent 60%),repeating-radial-gradient(circle at 22% 30%,rgba(110,90,50,.035) 0 1px,transparent 1px 4px),repeating-radial-gradient(circle at 72% 78%,rgba(255,255,255,.45) 0 1px,transparent 1px 5px)}
 .pc-lbl{position:absolute;left:6vw;top:80px;z-index:3;font-family:var(--mono);font-weight:500;font-size:12px;line-height:1;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
 .pc-rail{position:absolute;inset:0;z-index:1;cursor:grab;user-select:none;-webkit-user-select:none;outline:none}
-.pc-rail.grab{cursor:grabbing}
+.pc-rail.grab,.pc-rail.grab~.pc-ctl{cursor:grabbing}
+.pc-ctl{cursor:grab}
 .pc-rail:focus-visible{outline:none;box-shadow:inset 0 0 0 3px var(--red)}
 .pc-twine{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none}
 .pc-tw-s{fill:none;stroke:rgba(60,40,10,.2);stroke-width:5;transform:translate(0,10px);filter:blur(3px)}
@@ -372,7 +371,7 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 .pp-tab.c2{--tc:linear-gradient(90deg,#86C49E,#BCE4CB)}
 .pp-tab.c3{--tc:linear-gradient(90deg,#EA9384,#F8C2B7)}
 .pp-tab.c4{--tc:linear-gradient(90deg,#AE98DC,#D6CAF2)}
-.pp-pages{position:absolute;inset:0;z-index:2}
+.pp-pages{position:absolute;inset:0;z-index:2;-webkit-user-select:none;user-select:none}
 .pp-pg{position:absolute;top:0;width:50%;height:100%;overflow:hidden;background-color:#F6F0DF;background-image:radial-gradient(ellipse at 50% 118%,rgba(214,163,60,.13),transparent 60%),repeating-radial-gradient(circle at 28% 36%,rgba(23,38,90,.045) 0 1px,transparent 1px 7px),repeating-radial-gradient(circle at 78% 72%,rgba(215,51,47,.035) 0 1px,transparent 1px 9px),repeating-linear-gradient(115deg,rgba(23,38,90,.022) 0 1px,transparent 1px 4px);backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .pp-pgl{left:0;border-radius:6px 0 0 6px;box-shadow:inset -28px 0 30px -20px rgba(70,50,15,.32)}
 /* a sheet: its two pages back to back, turning on the spine */
@@ -399,7 +398,7 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 .pp-bio-f{margin:0;display:grid;gap:7px;align-content:start}
 .pp-bio-f dt{margin:0 0 2px;font-family:var(--mono);font-weight:500;font-size:8px;line-height:1;letter-spacing:.14em;text-transform:uppercase;color:#8A7F63}
 .pp-bio-f dd{margin:0;font-family:var(--mono);font-weight:500;font-size:12.5px;line-height:1.25;letter-spacing:.04em;text-transform:uppercase;color:#17265A}
-.pp-bio-gh{position:absolute;right:0;bottom:0;width:44px;height:56px;overflow:hidden;opacity:.16;filter:grayscale(1) contrast(1.3);border-radius:2px}
+.pp-bio-gh{position:relative;display:block;flex:none;align-self:center;margin-left:auto;width:44px;height:56px;overflow:hidden;opacity:.16;filter:grayscale(1) contrast(1.3);border-radius:2px}
 .pp-bio-p{margin:14px 0 10px;font-size:12.5px;line-height:1.6;color:#2E3B6B}
 .pp-bio-sig{display:flex;align-items:baseline;gap:12px;padding-top:6px;border-top:1px dashed rgba(122,111,85,.4)}
 .pp-bio-sig small{font-family:var(--mono);font-weight:500;font-size:8px;line-height:1;letter-spacing:.14em;text-transform:uppercase;color:#8A7F63}
@@ -408,21 +407,42 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 .pp-off{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
 .pp-off span{padding:5px 9px;border:1px solid rgba(23,38,90,.3);border-radius:999px;font-family:var(--mono);font-weight:500;font-size:10px;line-height:1;letter-spacing:.1em;text-transform:uppercase;color:#2E3B6B}
 /* Software Engineer: the visa, and the stamps of what I build with */
-.pp-visa{position:relative;height:214px;border-radius:6px;overflow:hidden;background-color:#E4EEE8;background-image:repeating-radial-gradient(circle at 70% 30%,rgba(46,125,91,.07) 0 1px,transparent 1px 6px),repeating-radial-gradient(circle at 20% 90%,rgba(31,58,138,.06) 0 1px,transparent 1px 8px),linear-gradient(135deg,#E8F2EC,#DCE8F3);box-shadow:0 1px 2px rgba(0,0,0,.2),0 0 0 1px rgba(23,38,90,.12)}
-.pp-visa-holo{position:absolute;left:0;top:0;bottom:0;width:26px;background:linear-gradient(180deg,#F9D2E6,#CFF3E7,#D3E1FF,#F2E0BD,#F9D2E6);background-size:100% 220%;animation:ppHolo 6s linear infinite;box-shadow:inset -1px 0 0 rgba(0,0,0,.08)}
-.pp-visa-in{position:absolute;left:40px;right:14px;top:13px;bottom:12px;display:flex;flex-direction:column;gap:10px}
-.pp-visa-top{display:flex;justify-content:space-between;align-items:baseline}
-.pp-visa-top b{font-family:var(--serif);font-style:italic;font-weight:400;font-size:24px;line-height:1;color:#17265A}
-.pp-visa-top span{font-family:var(--mono);font-weight:500;font-size:9px;line-height:1;letter-spacing:.16em;text-transform:uppercase;color:#2E7D5B}
-.pp-visa-f{margin:0;display:grid;gap:7px}
-.pp-visa-f div{display:grid;grid-template-columns:70px minmax(0,1fr);gap:8px;align-items:baseline}
-.pp-visa-f dt{font-family:var(--mono);font-weight:500;font-size:8px;line-height:1.3;letter-spacing:.14em;text-transform:uppercase;color:#5B6790}
-.pp-visa-f dd{margin:0;font-weight:700;font-size:12px;line-height:1.35;color:#17265A}
-.pp-q{margin-top:16px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:17px;line-height:1.42;color:#17265A}
-.pp-slip{position:relative;margin-top:16px;padding:12px 14px;background:#FFFDF4;font-size:12.5px;line-height:1.5;color:#2E3B6B;box-shadow:0 2px 7px rgba(0,0,0,.14);rotate:-1.2deg}
-.pp-slip b{display:block;margin-bottom:4px;font-family:var(--mono);font-weight:500;font-size:9px;line-height:1;letter-spacing:.16em;text-transform:uppercase;color:#D7332F}
-.pp-slip::before{content:"";position:absolute;left:18px;top:-4px;width:24px;height:5px;border-radius:2px;background:linear-gradient(#D8DCE4,#8C94A6);box-shadow:0 1px 1px rgba(0,0,0,.3)}
-.pp-stamps{position:relative;height:362px}
+/* Software Engineer: the whole left page is the visa (its paper, and the hologram strip down the outer edge) */
+.pp-visa-pg{background-color:#E4EEE8;background-image:repeating-radial-gradient(circle at 70% 30%,rgba(46,125,91,.07) 0 1px,transparent 1px 6px),repeating-radial-gradient(circle at 20% 90%,rgba(31,58,138,.06) 0 1px,transparent 1px 8px),linear-gradient(135deg,#E8F2EC,#DCE8F3)}
+.pp-visa-pg .pp-in{left:48px}
+.pp-visa-pg .pp-pn{left:48px}
+.pp-visa-holo{position:absolute;left:0;top:0;bottom:0;width:24px;background:linear-gradient(180deg,#F9D2E6,#CFF3E7,#D3E1FF,#F2E0BD,#F9D2E6);background-size:100% 220%;animation:ppHolo 6s linear infinite;box-shadow:inset -1px 0 0 rgba(0,0,0,.08)}
+.pp-visa-f{margin:0;display:grid;gap:12px}
+.pp-visa-f dt{margin-bottom:6px;font-family:var(--mono);font-weight:500;font-size:9px;line-height:1;letter-spacing:.16em;text-transform:uppercase;color:#5B6790}
+.pp-visa-f dd{margin:0;font-weight:700;font-size:14px;line-height:1.4;color:#17265A}
+/* the internships, newest first: the logo as tall as the words, then the dates and the company */
+.pp-wx{display:grid;gap:8px}
+.pp-wx li{display:grid;grid-template-columns:74px minmax(0,1fr);align-items:center;column-gap:8px;font-weight:500;font-size:12.5px;line-height:1.35;color:#2E3B6B}
+.pp-wx img{display:block;height:13px;width:auto;max-width:74px;mix-blend-mode:multiply}
+.pp-wx b,.pp-visa-f dd b{font-weight:700;color:#17265A}
+/* Education: the degree, then the module codes by genre (Foundations, Systems & Software, Math & Stats, Others), each genre in its own ink */
+.pp-edu{display:grid;grid-template-columns:74px minmax(0,1fr);align-items:center;column-gap:8px}
+.pp-edu-dt{display:flex;justify-content:space-between;align-items:baseline}
+.pp-edu img{display:block;height:13px;width:auto;max-width:74px;mix-blend-mode:multiply}
+.pp-edu-y{letter-spacing:.08em;text-transform:none}
+.pp-edu-d{display:block;margin:2px 0 0 82px;font-weight:500;font-size:12.5px;line-height:1.35;color:#2E3B6B}
+.pp-mods{display:grid;gap:6px;margin-top:9px}
+.pp-mg{display:grid;grid-template-columns:74px minmax(0,1fr);column-gap:8px;align-items:start}
+.pp-mg-l{padding-top:4px;font-family:var(--mono);font-weight:500;font-size:8px;line-height:1.3;letter-spacing:.12em;text-transform:uppercase;color:var(--mc)}
+.pp-mg ul{display:flex;flex-wrap:wrap;gap:5px}
+.pp-mg.g-f{--mc:#1F3A8A}.pp-mg.g-s{--mc:#2E7D5B}.pp-mg.g-m{--mc:#6B3FA0}.pp-mg.g-o{--mc:#B8322A}
+.pp-mod{margin:0;padding:4px 6px 3px;border:1.5px solid var(--mc);border-radius:4px;background:rgba(255,255,255,.5);color:var(--mc);font-family:var(--mono);font-weight:500;font-size:10px;line-height:1;letter-spacing:.05em;cursor:default;transition:background .15s,color .15s,transform .15s}
+.pp-mod:hover,.pp-mod:focus-visible,.pp-mod.on{background:var(--mc);color:#fff;transform:translateY(-1px)}
+.pp-mod-t{margin-top:8px;min-height:1.35em;font-weight:500;font-size:12px;line-height:1.35;font-style:italic;color:#7A6F55}
+.pp-mod-t.set{font-style:normal;font-weight:700;color:#17265A}
+.pp-stamps,.pp-places{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;align-content:flex-start}
+.pp-stamps{gap:16px 10px;padding:6px 0}
+.pp-places{gap:10px 7px;padding:2px 0}
+.pp-stamps .pp-st,.pp-places .pp-st{position:relative}
+.pp-places .pp-st{padding:6px 9px;font-size:10.5px;letter-spacing:.1em}
+.pp-places .pp-st small{margin-top:2px;font-size:7px;letter-spacing:.16em}
+.pp-places .pp-st.ov{padding:9px 13px}
+.pp-places .pp-st.ci{width:64px;height:64px;padding:0}
 /* a rubber stamp: a ring of ink (an inner ring too), a little rough (the filter above) */
 .pp-st{position:absolute;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 12px;border:2.5px solid currentColor;border-radius:4px;font-family:var(--mono);font-weight:500;font-size:13px;line-height:1.1;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:var(--sc);opacity:.86;mix-blend-mode:multiply;filter:url(#pp-ink);box-shadow:inset 0 0 0 2px #F6F0DF,inset 0 0 0 3.5px currentColor}
 .pp-st small{margin-top:3px;font-size:8px;letter-spacing:.2em}
@@ -432,44 +452,54 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 .pp-st.ink-n{--sc:#1F3A8A}.pp-st.ink-r{--sc:#B8322A}.pp-st.ink-g{--sc:#2E7D5B}.pp-st.ink-p{--sc:#6B3FA0}.pp-st.ink-b{--sc:#8A5A2B}
 .pp-st.dash{border-style:dashed;border-width:2px;color:#8A8F9E;opacity:1;filter:none;mix-blend-mode:normal;box-shadow:none;font-family:var(--hand);font-weight:600;font-size:19px;line-height:1.1;letter-spacing:0;text-transform:none}
 /* Traveller */
-.pp-tv-h{max-width:196px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:24px;line-height:1.15;color:#17265A}
-.pp-tv-p{margin-top:10px;max-width:196px;font-size:12.5px;line-height:1.55;color:#2E3B6B}
-.pp-snap{position:absolute;right:2px;top:40px;box-sizing:content-box;width:136px;padding:6px 6px 22px;background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.22);rotate:4deg}
-.pp-snap img{display:block;width:100%;height:158px;object-fit:cover}
-.pp-snap figcaption{position:absolute;left:0;right:0;bottom:5px;text-align:center;font-family:var(--hand);font-weight:600;font-size:15px;line-height:1;color:#2E3B6B}
-.pp-snap.pp-snap-b{top:250px;right:22px;width:112px;rotate:-6deg}
-.pp-snap.pp-snap-b img{height:84px}
-.pp-staple{position:absolute;left:50%;top:-5px;width:26px;height:6px;margin-left:-13px;border-radius:2px;background:linear-gradient(#D8DCE4,#8C94A6);box-shadow:0 1px 1px rgba(0,0,0,.3)}
-.pp-tv-st{position:relative;height:150px;margin-top:18px}
-.pp-since{margin-bottom:6px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;line-height:1.2;color:#17265A}
-.pp-todo{position:relative;height:210px}
-.pp-next{display:flex;align-items:center;gap:12px;margin-top:14px;padding:12px 14px;border:1.5px dashed rgba(23,38,90,.35);border-radius:8px}
-.pp-next span{font-family:var(--hand);font-weight:600;font-size:24px;line-height:1;color:#D7332F}
-.pp-next b{font-family:var(--mono);font-weight:500;font-size:12px;line-height:1.4;letter-spacing:.1em;text-transform:uppercase;color:#17265A}
+.pp-tv-h{margin:2px 0 16px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;line-height:1.22;color:#17265A}
+.pp-album{position:relative;width:100%;aspect-ratio:366/362}
+.pp-pic{position:absolute;display:block;width:43.7%;margin:0;padding:6px;border:0;border-radius:1px;background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.22);rotate:var(--r,0deg);cursor:zoom-in;transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s}
+.pp-pic.tall{width:30%}
+.pp-pic img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.pp-pic.tall img{aspect-ratio:3/4}
+.pp-pic:hover,.pp-pic:focus-visible{z-index:5;transform:scale(1.07);box-shadow:0 14px 26px rgba(0,0,0,.3)}
 /* Gamer */
-.pp-gm-h{font-family:var(--serif);font-weight:600;font-size:42px;line-height:1;letter-spacing:-.02em;color:#17265A}
-.pp-gm-p{margin-top:8px;font-size:13px;line-height:1.55;color:#2E3B6B}
-.pp-gm-st{position:relative;height:200px;margin-top:10px}
-.pp-gm-f{margin:0;display:grid;gap:8px}
-.pp-gm-f div{display:flex;gap:10px;align-items:baseline}
-.pp-gm-f dt{font-family:var(--mono);font-weight:500;font-size:8.5px;line-height:1;letter-spacing:.14em;text-transform:uppercase;color:#8A7F63}
-.pp-gm-f dd{margin:0}
-.pp-tiles{display:flex;gap:12px;margin:22px 0 26px}
-.pp-tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;width:62px;height:84px;border-radius:9px;background:linear-gradient(160deg,#FFFEF8,#EFE8D4);box-shadow:inset 0 0 0 1px rgba(0,0,0,.06),inset 0 -3px 6px rgba(0,0,0,.06),0 7px 0 #2E7D5B,0 9px 0 #22603F,0 13px 16px rgba(0,0,0,.25)}
-.pp-tile b{font-family:"Noto Serif SC","Songti SC",serif;font-weight:700;font-size:40px;line-height:1}
-.pp-tile b.r{color:#C0392B}.pp-tile b.g{color:#1E7A4B}.pp-tile b.n{color:#1F2D6B}
-.pp-tile.two b{font-size:25px}
+.pp-gm{display:flex;flex-direction:column}
+.pp-gm-logo{display:block;align-self:flex-start;height:54px;width:auto;margin:0 0 12px}
+.pp-ow-logo{mix-blend-mode:multiply}
+.pp-gm-p{font-size:13px;line-height:1.55;color:#2E3B6B}
+.pp-gm-p b{color:#17265A}
+.pp-widow{position:absolute;right:-10px;top:38px;height:250px;width:auto;pointer-events:none;filter:drop-shadow(0 10px 12px rgba(23,38,90,.28))}
+.pp-ow-p{max-width:calc(100% - 112px)}
+.pp-dm{max-width:calc(100% - 112px);margin-top:12px;font-family:var(--hand);font-weight:600;font-size:22px;line-height:1.1;color:#D7332F;rotate:-3deg}
+/* the gameplay clip (a placeholder until the video is in) */
+.pp-clip{position:relative;display:block;flex:none;width:100%;height:176px;margin-top:auto;border-radius:6px;background:#10173A;object-fit:cover;box-shadow:0 8px 18px -8px rgba(10,19,51,.6)}
+.pp-clip-ph{display:grid;place-content:center;justify-items:center;gap:6px;text-align:center;background:repeating-linear-gradient(135deg,#141C46 0 12px,#19235290 12px 24px),#10173A;outline:1.5px dashed rgba(201,208,236,.35);outline-offset:-8px}
+.pp-clip-ph::before{content:"";width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.12) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 7l9 5-9 5z' fill='%23F2C14E'/%3E%3C/svg%3E") center/22px no-repeat}
+.pp-clip-ph span{font-family:var(--mono);font-weight:500;font-size:10px;line-height:1;letter-spacing:.16em;text-transform:uppercase;color:#C9D0EC}
+.pp-clip-ph small{font-family:var(--hand);font-weight:600;font-size:19px;line-height:1;color:#F2C14E}
+.pp-gm-st{position:relative;height:108px;margin-top:8px}
 /* Music */
 .pp-mu-h{font-family:var(--serif);font-style:italic;font-weight:400;font-size:48px;line-height:1;color:#17265A}
 .pp-vinyl-w{position:relative;width:220px;height:220px;margin:22px auto 14px}
 .pp-vinyl,.pp-vinyl-sh{position:absolute;inset:0;border-radius:50%}
-.pp-vinyl{background:radial-gradient(circle,#F2C14E 0 5%,#D7332F 5.5% 21%,#0E0E10 21.5% 23%,transparent 23.5%),repeating-radial-gradient(circle,#18181B 0 1.1px,#27272C 1.5px 2.4px);box-shadow:0 18px 30px rgba(0,0,0,.35),inset 0 0 0 6px #0B0B0D;animation:ppSpin 7s linear infinite}
+.pp-vinyl{background:radial-gradient(circle,#F2C14E 0 5%,#D7332F 5.5% 21%,#0E0E10 21.5% 23%,transparent 23.5%),repeating-radial-gradient(circle,#18181B 0 1.1px,#27272C 1.5px 2.4px);box-shadow:0 18px 30px rgba(0,0,0,.35),inset 0 0 0 6px #0B0B0D;animation:ppSpin 3.2s linear infinite;animation-play-state:paused}
+.pp-playing .pp-vinyl{animation-play-state:running}
 .pp-vinyl-sh{background:conic-gradient(from 20deg,transparent 0 9%,rgba(255,255,255,.15) 14%,transparent 21% 55%,rgba(255,255,255,.1) 61%,transparent 69%);pointer-events:none}
+.pp-arm{position:absolute;right:-30px;top:-10px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,#D8DCE4 0 30%,#8C94A6 34% 100%);box-shadow:0 2px 3px rgba(0,0,0,.35);transform-origin:9px 9px;rotate:-4deg;transition:rotate .7s cubic-bezier(.3,.7,.3,1)}
+.pp-arm::before{content:"";position:absolute;left:7px;top:9px;width:4px;height:150px;border-radius:2px;background:linear-gradient(90deg,#B9BFCC,#E9ECF2,#9AA2B3);box-shadow:1px 2px 3px rgba(0,0,0,.25)}
+.pp-arm::after{content:"";position:absolute;left:2px;top:152px;width:14px;height:22px;border-radius:2px;background:#2A2F3D;rotate:18deg}
+.pp-playing .pp-arm{rotate:24deg}
 .pp-mu-p{text-align:center;font-family:var(--serif);font-style:italic;font-weight:400;font-size:18px;line-height:1.3;color:#2E3B6B}
 .pp-setl{position:relative;margin:16px 6px 0;padding:22px 16px 16px 48px;background:repeating-linear-gradient(#FFFEF8 0 33px,#BFD0E8 33px 34px);box-shadow:0 3px 10px rgba(0,0,0,.16);rotate:1.4deg}
 .pp-setl::before{content:"";position:absolute;left:36px;top:0;bottom:0;width:1.5px;background:rgba(215,51,47,.45)}
 .pp-setl ol{counter-reset:pps}
-.pp-setl li{counter-increment:pps;font-family:var(--hand);font-weight:600;font-size:25px;line-height:34px;color:#1E2F7A}
+.pp-setl li{counter-increment:pps;display:flex;align-items:center;gap:9px;height:34px;font-family:var(--hand);font-weight:600;font-size:23px;line-height:34px;color:#1E2F7A}
+.pp-songs small{margin-left:4px;font-family:var(--mono);font-weight:500;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#7A6F55}
+.pp-play{flex:none;display:grid;place-items:center;width:24px;height:24px;margin:0;padding:0;border:1.5px solid #1E2F7A;border-radius:50%;background:#FFFEF8;cursor:pointer;transition:background .15s,border-color .15s,transform .15s}
+.pp-play::before{content:"";width:0;height:0;margin-left:2px;border-left:8px solid #1E2F7A;border-top:5px solid transparent;border-bottom:5px solid transparent}
+.pp-play:hover{transform:scale(1.1)}
+.pp-songs li.on{color:#D7332F}
+.pp-songs li.on .pp-play{background:#D7332F;border-color:#D7332F}
+.pp-songs li.on .pp-play::before{width:9px;height:10px;margin:0;border:0;background:linear-gradient(90deg,#fff 0 3px,transparent 3px 6px,#fff 6px)}
+.pp-songs li.miss .pp-play{opacity:.35;cursor:default;transform:none}
+.pp-songs li.miss::after{content:"coming soon";margin-left:auto;font-family:var(--mono);font-weight:500;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:#A39A80}
 .pp-setl li::before{content:counter(pps,decimal-leading-zero);margin-right:10px;font-family:var(--mono);font-weight:500;font-size:10px;line-height:1;color:#D7332F;vertical-align:middle}
 .pp-tape{position:absolute;width:72px;height:20px;background:rgba(238,224,178,.78);box-shadow:0 1px 2px rgba(0,0,0,.08)}
 .pp-tape.t1{left:-16px;top:-8px;rotate:-24deg}.pp-tape.t2{right:-14px;top:-6px;rotate:18deg}
@@ -575,9 +605,14 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
   .pp-pn{display:none}
   .pp-mrz{position:relative;margin-top:14px;font-size:9.5px}
   .ab-cards{--k:.5;height:276px}
-  .pp-tv-st{height:170px}
-  .pp-tv-h,.pp-tv-p{max-width:calc(100% - 150px)}
-  .pp-snap.pp-snap-b{top:236px}
+  .pp-visa-pg .pp-in{padding-left:42px}
+  .pp-wx li{grid-template-columns:66px minmax(0,1fr);font-size:12px}
+  .pp-wx span b{display:block}
+  .pp-gm-st .pp-st+.pp-st{left:auto!important;right:6px}
+  .pp-setl li{font-size:20px;white-space:nowrap}
+  .pp-wx img{max-width:66px;height:12px}
+  .pp-clip{height:auto;aspect-ratio:16/9;margin-top:16px}
+  .pp-widow{height:210px;top:34px}
   .lt{grid-template-columns:minmax(0,1fr);gap:16px;padding:10vh 6vw 6vh;align-content:center}
   .lt-l h2{font-size:54px}
   .lt-under{margin-bottom:10px}
@@ -792,7 +827,7 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
         <div class="pc-top"><span>Post card</span><b>No. 02</b></div>
         <p class="pc-bw">Built with</p>
         <ul class="pc-stack">
-          <li>React</li><li>Vite</li><li>Socket.IO</li><li>Node.js</li><li>Express</li><li>PostgreSQL</li><li>JWT</li>
+          <li>React</li><li>Node.js</li><li>Express</li><li>Socket.IO</li><li>PostgreSQL</li>
         </ul>
         <div class="pc-addr">
           <small>Send to</small>
@@ -812,7 +847,7 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
         <div class="pc-top"><span>Post card</span><b>No. 03</b></div>
         <p class="pc-bw">Built with</p>
         <ul class="pc-stack">
-          <li>React</li><li>TypeScript</li><li>Three.js</li><li>React Three Fiber</li><li>Zustand</li><li>Vite</li><li>Vercel</li>
+          <li>React</li><li>TypeScript</li><li>Three.js</li><li>React Three Fiber</li>
         </ul>
         <div class="pc-addr">
           <small>Send to</small>
@@ -826,7 +861,7 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
     <button class="pc-nb" id="pcPrev" type="button" aria-label="Previous project" disabled><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button>
     <span class="pc-cnt" aria-live="polite">No. <span id="pcCur">01</span> <i>of 03</i></span>
     <button class="pc-nb" id="pcNext" type="button" aria-label="Next project"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></button>
-    <span class="pc-hint">Drag the line, swipe, or click the next postcard</span>
+    <span class="pc-hint">Drag or swipe anywhere, or click the next postcard</span>
   </div>
 </div></section>
 
@@ -883,7 +918,7 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
   <div class="pp-t" id="ppT">
     <p class="pp-lbl">Section 4: About me</p>
     <h2 class="pp-h">About me</h2>
-    <p class="pp-cap">Five pages in one passport. Pick a tab to flip to it.</p>
+    <p class="pp-cap">Five pages in one passport. Pick a tab, or swipe, to flip to it.</p>
     <p class="pp-now">Open at <b id="ppNow">Me</b></p>
   </div>
   <div class="pp-book" id="ppBook">
@@ -913,10 +948,9 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
               <div><dt>Studying</dt><dd>Computer Science · Y4 · NUS</dd></div>
               <div><dt>Type</dt><dd>Adventurous · Resilient</dd></div>
             </dl>
-            <span class="pp-bio-gh" aria-hidden="true"><img src="photos/weibin-2.JPG" alt=""></span>
           </div>
           <p class="pp-bio-p">I’m adventurous and resilient, and happiest when I’m hiking, cycling or travelling somewhere new. I’m about to start my internship at ShopBack as a Software Engineer, while building a few personal projects on the side. In June, I came back from a student exchange in the US, and I’m now turning the trip into a vlog.</p>
-          <div class="pp-bio-sig"><small>Holder’s signature</small><span class="pp-sig">Wei Bin</span></div>
+          <div class="pp-bio-sig"><small>Holder’s signature</small><span class="pp-sig">Wei Bin</span><span class="pp-bio-gh" aria-hidden="true"><img src="photos/weibin-2.JPG" alt=""></span></div>
           <p class="pp-mrz" aria-hidden="true">P&lt;AIRMAIL&lt;LOW&lt;&lt;WEI&lt;BIN&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>WB0427&lt;4SIN&lt;NUS&lt;CS&lt;Y4&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;06</p>
         </div>
         <span class="pp-pn">01</span>
@@ -961,115 +995,143 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
                 </div>
               </div></div>
             </div>
-            <div class="pp-off"><span>Hiking</span><span>Cycling</span><span>Travelling</span><span>Cooking</span></div>
+            <div class="pp-off"><span>Hiking</span><span>Cycling</span><span>Travelling</span><span>Eating</span></div>
           </div>
           <span class="pp-pn">02</span>
         </div>
-        <div class="pp-pg pp-bf" data-t="1" aria-hidden="true">
+        <div class="pp-pg pp-bf pp-visa-pg" data-t="1" aria-hidden="true">
+          <i class="pp-visa-holo"></i>
           <div class="pp-in">
             <div class="pp-hd"><span>Visas</span><span>Software Engineer</span></div>
-            <div class="pp-visa">
-              <i class="pp-visa-holo"></i>
-              <div class="pp-visa-in">
-                <div class="pp-visa-top"><b>Work visa</b><span>Software Engineer</span></div>
-                <dl class="pp-visa-f">
-                  <div><dt>Focus</dt><dd>Backend · Full-stack · Systems · Testing · Security</dd></div>
-                  <div><dt>Now</dt><dd>Full Stack Developer Intern · Continental (AUMOVIO)</dd></div>
-                  <div><dt>Next</dt><dd>Software Engineer Intern · ShopBack · Jan 2027</dd></div>
-                  <div><dt>Also</dt><dd>Teaching Assistant · CS4218 Software Testing · NUS</dd></div>
-                </dl>
-              </div>
-            </div>
-            <p class="pp-q">“I like building things that work end to end: the server, the database, the interface, and the tests that prove it holds up.”</p>
-            <div class="pp-slip"><b>Proud of</b>Found a slow database search by load testing an online store app, then fixed it by adding text indexes.</div>
+            <dl class="pp-visa-f">
+              <div><dt>Focus</dt><dd>Backend engineering · Scalable systems · System design</dd></div>
+              <div><dt>Work Experience</dt><dd>
+                <ul class="pp-wx">
+                  <li><img src="logos/shopback.jpg" alt="ShopBack"><span>January 2027 – June 2027 <b>@ShopBack</b></span></li>
+                  <li><img src="logos/continental.jpg" alt="Continental"><span>June 2026 – December 2026 <b>@Continental</b></span></li>
+                  <li><img src="logos/growthbeans.jpg" alt="Growthbeans"><span>May 2025 – August 2025 <b>@Growthbeans</b></span></li>
+                  <li><img src="logos/nus.jpg" alt="NUS"><span>January 2026 – November 2026 <b>@NUS</b><br>Teaching Assistant, CS4218 - Software Testing</span></li>
+                </ul>
+              </dd></div>
+              <!-- Education: point at (or tap) a module code and its title shows in the line under the codes -->
+              <div><dt class="pp-edu-dt">Education<span class="pp-edu-y">2023 – 2027</span></dt><dd>
+                <span class="pp-edu"><img src="logos/nus.jpg" alt=""><span class="pp-edu-n">National University of Singapore</span></span>
+                <span class="pp-edu-d">Bachelor of Computing, Computer Science</span>
+                <div class="pp-mods" aria-label="Modules, by genre">
+                  <div class="pp-mg g-f"><span class="pp-mg-l">Foundations</span><ul><li><button class="pp-mod" type="button" data-t="Programming Methodology">CS1101S</button></li><li><button class="pp-mod" type="button" data-t="Discrete Structures">CS1231S</button></li><li><button class="pp-mod" type="button" data-t="Programming Methodology II">CS2030S</button></li><li><button class="pp-mod" type="button" data-t="Data Structures and Algorithms">CS2040S</button></li><li><button class="pp-mod" type="button" data-t="Database Systems">CS2102</button></li><li><button class="pp-mod" type="button" data-t="Introduction to Computer Networks">CS2105</button></li></ul></div>
+                  <div class="pp-mg g-s"><span class="pp-mg-l">Systems &amp; Software</span><ul><li><button class="pp-mod" type="button" data-t="Computer Organisation">CS2100</button></li><li><button class="pp-mod" type="button" data-t="Software Engineering">CS2103T</button></li><li><button class="pp-mod" type="button" data-t="Introduction to Operating Systems">CS2106</button></li><li><button class="pp-mod" type="button" data-t="Introduction to Information Security">CS2107</button></li><li><button class="pp-mod" type="button" data-t="Foundation of Software Engineering">CS3213</button></li><li><button class="pp-mod" type="button" data-t="Software Testing">CS4218</button></li><li><button class="pp-mod" type="button" data-t="Big Data Systems for Data Science">CS4225</button></li><li><button class="pp-mod" type="button" data-t="Internet Architecture">CS4226</button></li></ul></div>
+                  <div class="pp-mg g-m"><span class="pp-mg-l">Math &amp; Stats</span><ul><li><button class="pp-mod" type="button" data-t="Calculus for Computing">MA1521</button></li><li><button class="pp-mod" type="button" data-t="Linear Algebra for Computing">MA1522</button></li><li><button class="pp-mod" type="button" data-t="Probability and Statistics">ST2334</button></li></ul></div>
+                  <div class="pp-mg g-o"><span class="pp-mg-l">Others</span><ul><li><button class="pp-mod" type="button" data-t="Computer Graphics">CS3241</button></li><li><button class="pp-mod" type="button" data-t="Effective Communication for Computing Professionals">CS2101</button></li><li><button class="pp-mod" type="button" data-t="IT Management and Organisation">IS1128</button></li><li><button class="pp-mod" type="button" data-t="Quantitative Reasoning with Data">GEA1000</button></li></ul></div>
+                </div>
+                <p class="pp-mod-t" id="ppModT" aria-live="polite"><span class="x-hov">Hover over a module to see its title</span><span class="x-tap">Tap a module to see its title</span></p>
+              </dd></div>
+            </dl>
           </div>
           <span class="pp-pn">03</span>
         </div>
       </div>
 
-      <!-- sheet 2: Software Engineer (the stamps) / Traveller (where it started) -->
+      <!-- sheet 2: Software Engineer (the stamps) / Traveller (the photos) -->
       <div class="pp-sh" style="z-index:19">
         <div class="pp-pg pp-ff" data-t="1" aria-hidden="true">
           <div class="pp-in">
-            <div class="pp-hd"><span>Cleared to build with</span><span>10 stamps</span></div>
+            <div class="pp-hd"><span>Familiar with</span><span>Stamps</span></div>
             <div class="pp-stamps">
-              <span class="pp-st ink-n" style="left:4px;top:6px;rotate:-7deg">Python<small>Cleared</small></span>
-              <span class="pp-st ov ink-r" style="left:146px;top:0;rotate:6deg">Java<small>Entry</small></span>
-              <span class="pp-st ci ink-g" style="left:242px;top:16px;rotate:-6deg">Go</span>
-              <span class="pp-st ink-p" style="left:8px;top:98px;rotate:4deg">TypeScript<small>Valid</small></span>
-              <span class="pp-st ov ink-n" style="left:156px;top:104px;rotate:-9deg">SQL</span>
-              <span class="pp-st ink-r" style="left:234px;top:122px;rotate:7deg">React</span>
-              <span class="pp-st ov ink-g" style="left:18px;top:196px;rotate:-5deg">Next.js</span>
-              <span class="pp-st ink-b" style="left:150px;top:206px;rotate:7deg">Spring Boot<small>Cleared</small></span>
-              <span class="pp-st ink-n" style="left:28px;top:290px;rotate:5deg">Docker</span>
-              <span class="pp-st ov ink-p" style="left:140px;top:294px;rotate:-6deg">PostgreSQL</span>
+              <span class="pp-st ink-n" style="rotate:-7deg">Python</span>
+              <span class="pp-st ov ink-r" style="rotate:6deg">Java</span>
+              <span class="pp-st ci ink-g" style="rotate:-6deg">Go</span>
+              <span class="pp-st ink-p" style="rotate:4deg">TypeScript</span>
+              <span class="pp-st ov ink-b" style="rotate:-5deg">JavaScript</span>
+              <span class="pp-st ov ink-n" style="rotate:-9deg">SQL</span>
+              <span class="pp-st ink-r" style="rotate:7deg">React.js</span>
+              <span class="pp-st ov ink-g" style="rotate:-4deg">Redis</span>
+              <span class="pp-st ov ink-p" style="rotate:5deg">Node.js</span>
+              <span class="pp-st ink-b" style="rotate:-6deg">Django</span>
+              <span class="pp-st ci ink-n" style="rotate:8deg">REST</span>
+              <span class="pp-st ov ink-g" style="rotate:-5deg">Next.js</span>
+              <span class="pp-st ink-b" style="rotate:6deg">Spring Boot</span>
+              <span class="pp-st ov ink-p" style="rotate:-4deg">PostgreSQL</span>
+              <span class="pp-st ink-r" style="rotate:5deg">Docker</span>
             </div>
           </div>
           <span class="pp-pn">04</span>
         </div>
         <div class="pp-pg pp-bf" data-t="2" aria-hidden="true">
           <div class="pp-in">
-            <div class="pp-hd"><span>Entries</span><span>Where it started</span></div>
-            <h3 class="pp-tv-h">I only became a traveller after my US exchange.</h3>
-            <p class="pp-tv-p">It started with 15 stops across the US and Canada, from January to May 2026. Since coming home, I travel whenever I can.</p>
-            <figure class="pp-snap"><img src="photos/weibin-1.JPG" alt="Wei Bin at the airport with his luggage"><i class="pp-staple"></i><figcaption>Day one</figcaption></figure>
-            <div class="pp-tv-st">
-              <span class="pp-st ov xl ink-r" style="left:0;top:6px;rotate:-8deg">USA · Entered<small>January 2026</small></span>
-              <span class="pp-st ink-n" style="left:150px;top:92px;rotate:6deg">Singapore · Home<small>June 2026</small></span>
+            <div class="pp-hd"><span>Entries</span><span>Traveller</span></div>
+            <p class="pp-tv-h">My trip to the US sparked my desire to see the world.</p>
+            <!-- the photos (web-sized copies in photos/web/aboutme). A click opens one bigger -->
+            <div class="pp-album">
+              <button class="pp-pic" type="button" style="left:0%;top:0%;--r:-4deg"><img src="photos/web/aboutme/ramen-with-friends.jpg" alt="Wei Bin and friends sharing a meal at a ramen restaurant"></button>
+              <button class="pp-pic" type="button" style="left:50.8%;top:1.1%;--r:3deg"><img src="photos/web/aboutme/cultural-night.jpg" alt="Wei Bin and friends in front of colourful festival decorations"></button>
+              <button class="pp-pic" type="button" style="left:1.6%;top:31.1%;--r:2deg"><img src="photos/web/aboutme/umd-m-group.jpg" alt="Wei Bin and friends on the grass by the flower M at the University of Maryland"></button>
+              <button class="pp-pic tall" type="button" style="left:58.5%;top:30%;--r:5deg"><img src="photos/web/aboutme/yosemite-falls.jpg" alt="Wei Bin and friends at a waterfall in Yosemite"></button>
+              <button class="pp-pic" type="button" style="left:0%;top:62.8%;--r:-3deg"><img src="photos/web/aboutme/umd-m-selfie.jpg" alt="A selfie with friends at the flower M at the University of Maryland"></button>
+              <button class="pp-pic" type="button" style="left:48.1%;top:66.1%;--r:-5deg"><img src="photos/web/aboutme/san-francisco-hilltop.jpg" alt="Wei Bin and a friend on a hilltop above San Francisco"></button>
             </div>
-            <figure class="pp-snap pp-snap-b"><img src="photos/Toronto.JPG" alt="Wei Bin at Niagara Falls"><figcaption>Toronto</figcaption></figure>
           </div>
           <span class="pp-pn">05</span>
         </div>
       </div>
 
-      <!-- sheet 3: Traveller (since then) / Gamer (Valorant) -->
+      <!-- sheet 3: Traveller (the stamps) / Gamer (Valorant) -->
       <div class="pp-sh" style="z-index:18">
         <div class="pp-pg pp-ff" data-t="2" aria-hidden="true">
           <div class="pp-in">
-            <div class="pp-hd"><span>Since then</span><span>June 2026 →</span></div>
-            <p class="pp-since">Every trip since gets a stamp.</p>
-            <div class="pp-todo">
-              <span class="pp-st dash" style="left:6px;top:14px;rotate:-6deg">[ trip · month ]</span>
-              <span class="pp-st dash" style="left:170px;top:40px;rotate:5deg">[ trip · month ]</span>
-              <span class="pp-st dash" style="left:40px;top:118px;rotate:3deg">[ trip · month ]</span>
+            <div class="pp-hd"><span>Places visited</span><span>Stamps</span></div>
+            <div class="pp-places">
+              <span class="pp-st ink-n" style="rotate:-6deg">Los Angeles<small>California</small></span>
+              <span class="pp-st ov ink-r" style="rotate:5deg">San Francisco<small>California</small></span>
+              <span class="pp-st ink-g" style="rotate:-3deg">Yosemite<small>California</small></span>
+              <span class="pp-st ov ink-p" style="rotate:7deg">Seattle<small>Washington</small></span>
+              <span class="pp-st ink-b" style="rotate:-5deg">University of Maryland<small>Maryland</small></span>
+              <span class="pp-st ink-n" style="rotate:4deg">New York City<small>New York</small></span>
+              <span class="pp-st ov ink-r" style="rotate:-8deg">Washington D.C.<small>USA</small></span>
+              <span class="pp-st ink-g" style="rotate:6deg">Philadelphia<small>Pennsylvania</small></span>
+              <span class="pp-st ov ink-p" style="rotate:-4deg">Baltimore<small>Maryland</small></span>
+              <span class="pp-st ink-b" style="rotate:3deg">Boston<small>Massachusetts</small></span>
+              <span class="pp-st ov ink-n" style="rotate:-7deg">Chicago<small>Illinois</small></span>
+              <span class="pp-st ink-r" style="rotate:5deg">Orlando<small>Florida</small></span>
+              <span class="pp-st ov ink-g" style="rotate:-2deg">Miami<small>Florida</small></span>
+              <span class="pp-st ink-p" style="rotate:6deg">Las Vegas<small>Nevada</small></span>
+              <span class="pp-st ink-b" style="rotate:-5deg">The Grand Canyon<small>Arizona</small></span>
+              <span class="pp-st ov ink-n" style="rotate:8deg">Toronto<small>Ontario</small></span>
+              <span class="pp-st ink-r" style="rotate:-4deg">Niagara Falls<small>Ontario</small></span>
+              <span class="pp-st ov ink-g" style="rotate:3deg">Loudoun<small>Virginia</small></span>
+              <span class="pp-st ci ink-p" style="rotate:-6deg">Taiwan</span>
             </div>
-            <div class="pp-next"><span>Next →</span><b>Chengdu · Chongqing · Xi’an</b></div>
-            <p class="pp-ph" style="margin:14px 0 0">[ add the trips you have taken since June ]</p>
           </div>
           <span class="pp-pn">06</span>
         </div>
         <div class="pp-pg pp-bf" data-t="3" aria-hidden="true">
-          <div class="pp-in">
-            <div class="pp-hd"><span>Ranked</span><span>Gamer</span></div>
-            <h3 class="pp-gm-h">Valorant</h3>
-            <p class="pp-gm-p">Competing in Ascendant and Immortal.</p>
+          <div class="pp-in pp-gm">
+            <div class="pp-hd"><span>Valorant</span><span>Gamer</span></div>
+            <img class="pp-gm-logo" src="photos/gamer/valorant-logo.svg" alt="Valorant">
+            <p class="pp-gm-p">I’m a competitive person by nature, and FPS games are where it shows. I play to win, and I love the grind of getting a little sharper every match.</p>
             <div class="pp-gm-st">
-              <span class="pp-st ov xl ink-r" style="left:10px;top:14px;rotate:-7deg">Ascendant · Immortal<small>Competitive</small></span>
-              <span class="pp-st ink-n" style="left:96px;top:120px;rotate:5deg">Not a sweat · I promise</span>
+              <span class="pp-st ov ink-r" style="left:2px;top:4px;rotate:-6deg">Ascendant · Immortal<small>Competitive</small></span>
+              <span class="pp-st ink-n" style="left:112px;top:62px;rotate:4deg">Not a sweat · I promise</span>
             </div>
-            <dl class="pp-gm-f">
-              <div><dt>Main agent</dt><dd class="pp-ph">[ add yours ]</dd></div>
-              <div><dt>Usually</dt><dd class="pp-ph">[ solo queue or with friends ]</dd></div>
-            </dl>
+            <!-- gameplay clip: replace this whole <div class="pp-clip pp-clip-ph">…</div> with
+                 <video class="pp-clip" src="videos/valorant-gameplay.mp4" autoplay muted loop playsinline></video> -->
+            <div class="pp-clip pp-clip-ph"><span>Valorant gameplay</span><small>coming soon</small></div>
           </div>
           <span class="pp-pn">07</span>
         </div>
       </div>
 
-      <!-- sheet 4: Gamer (mahjong) / Music (the artist) -->
+      <!-- sheet 4: Gamer (Overwatch) / Music (the artist) -->
       <div class="pp-sh" style="z-index:17">
         <div class="pp-pg pp-ff" data-t="3" aria-hidden="true">
-          <div class="pp-in">
-            <div class="pp-hd"><span>Also at the table</span><span>Gamer</span></div>
-            <h3 class="pp-gm-h">Mahjong</h3>
-            <div class="pp-tiles" aria-hidden="true">
-              <span class="pp-tile" style="rotate:-4deg"><b class="r">中</b></span>
-              <span class="pp-tile" style="rotate:2deg"><b class="g">發</b></span>
-              <span class="pp-tile" style="rotate:-1deg"><b class="n">東</b></span>
-              <span class="pp-tile two" style="rotate:3deg"><b class="n">一</b><b class="r">萬</b></span>
-            </div>
-            <p class="pp-ph">[ a line about how you play, and who with ]</p>
+          <div class="pp-in pp-gm">
+            <div class="pp-hd"><span>Overwatch</span><span>Gamer</span></div>
+            <img class="pp-gm-logo pp-ow-logo" src="photos/gamer/overwatch-logo.png" alt="Overwatch">
+            <img class="pp-widow" src="photos/gamer/widowmaker.webp" alt="Widowmaker, the Overwatch sniper">
+            <p class="pp-gm-p pp-ow-p">My favourite mode is <b>WidowHS</b>, a custom game where everyone plays Widowmaker and only headshots count.</p>
+            <p class="pp-dm">DM me for a solo match :p</p>
+            <!-- gameplay clip: replace this whole <div class="pp-clip pp-clip-ph">…</div> with
+                 <video class="pp-clip" src="videos/overwatch-gameplay.mp4" autoplay muted loop playsinline></video> -->
+            <div class="pp-clip pp-clip-ph"><span>Overwatch gameplay</span><small>coming soon</small></div>
           </div>
           <span class="pp-pn">08</span>
         </div>
@@ -1077,8 +1139,8 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
           <div class="pp-in">
             <div class="pp-hd"><span>Favourite artist</span><span>Music</span></div>
             <h3 class="pp-mu-h">The Weeknd</h3>
-            <div class="pp-vinyl-w" aria-hidden="true"><i class="pp-vinyl"></i><i class="pp-vinyl-sh"></i></div>
-            <p class="pp-mu-p">On repeat while I build.</p>
+            <div class="pp-vinyl-w" aria-hidden="true"><i class="pp-vinyl"></i><i class="pp-vinyl-sh"></i><i class="pp-arm"></i></div>
+            <p class="pp-mu-p" id="ppNp" aria-live="polite">On repeat while I build.</p>
           </div>
           <span class="pp-pn">09</span>
         </div>
@@ -1088,13 +1150,18 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
       <div class="pp-sh" style="z-index:16">
         <div class="pp-pg pp-ff" data-t="4" aria-hidden="true">
           <div class="pp-in">
-            <div class="pp-hd"><span>Favourite songs</span><span>On repeat</span></div>
+            <div class="pp-hd"><span>Favourite songs</span><span>Press play</span></div>
             <div class="pp-setl"><i class="pp-tape t1"></i><i class="pp-tape t2"></i>
-              <ol>
-                <li>Dancing In The Flames</li>
-                <li>Die For You</li>
-                <li>Starboy</li>
-                <li class="pp-ph">[ more to add ]</li>
+              <!-- one <li> per song. data-src is its audio file (an .mp3, .m4a or .mp4 all play). A file that is not
+                   there yet shows its button faded, with "coming soon" -->
+              <ol class="pp-songs">
+                <li data-src="audio/dancing-in-the-flames.mp3" data-name="Dancing In The Flames"><button class="pp-play" type="button" aria-label="Play Dancing In The Flames"></button><span>Dancing In The Flames</span></li>
+                <li data-src="audio/die-for-you.mp3" data-name="Die For You"><button class="pp-play" type="button" aria-label="Play Die For You"></button><span>Die For You</span></li>
+                <li data-src="audio/starboy.mp3" data-name="Starboy"><button class="pp-play" type="button" aria-label="Play Starboy"></button><span>Starboy</span></li>
+                <li data-src="audio/save-your-tears.mp3" data-name="Save Your Tears"><button class="pp-play" type="button" aria-label="Play Save Your Tears"></button><span>Save Your Tears</span></li>
+                <li data-src="audio/sao-paulo.mp3" data-name="São Paulo"><button class="pp-play" type="button" aria-label="Play São Paulo"></button><span>São Paulo</span></li>
+                <li data-src="audio/love-me-harder.mp3" data-name="Love Me Harder"><button class="pp-play" type="button" aria-label="Play Love Me Harder"></button><span>Love Me Harder</span></li>
+                <li data-src="audio/gameboy.mp3" data-name="Gameboy"><button class="pp-play" type="button" aria-label="Play Gameboy"></button><span>Gameboy <small>Katseye</small></span></li>
               </ol>
             </div>
           </div>
@@ -1363,16 +1430,17 @@ function pcGo(n){n=clamp(n,0,pcCards.length-1);pcI=n;pcDrag=0;pcLay();
   pcPrev.disabled=n===0;pcNext.disabled=n===pcCards.length-1;pcCur.textContent=String(n+1).padStart(2,'0');
   /* a button that has just been used up hands the focus to the other one */
   const f=document.activeElement;if((f===pcPrev||f===pcNext)&&f.disabled)(f===pcPrev?pcNext:pcPrev).focus({preventScroll:true})}
-/* a drag or a swipe: sideways moves the line, up or down is left to the page. A touch decides on its first move, as the
+/* a drag or a swipe, anywhere in the section (the controls under the cards too): sideways moves the line, up or down is left to the page. A touch decides on its first move, as the
    page does; the mouse waits for a few pixels, so that a click is still a click */
-pcRail.addEventListener('pointerdown',e=>{
+const pcZone=pcRail.parentNode;
+pcZone.addEventListener('pointerdown',e=>{
   if(e.pointerType==='mouse'&&e.button!==0||e.target.closest('a,button'))return;
   pcDs={x:e.clientX,y:e.clientY,w:pcRail.clientWidth||1,t:performance.now(),id:e.pointerId,ax:'',touch:e.pointerType==='touch',h:[]}});
-pcRail.addEventListener('pointermove',e=>{const d=pcDs;if(!d||e.pointerId!==d.id)return;
+pcZone.addEventListener('pointermove',e=>{const d=pcDs;if(!d||e.pointerId!==d.id)return;
   const dx=e.clientX-d.x,dy=e.clientY-d.y;
   if(!d.ax){if(d.touch?!dx&&!dy:Math.abs(dx)<6&&Math.abs(dy)<6)return;
     d.ax=Math.abs(dx)>Math.abs(dy)?'x':'y';
-    if(d.ax==='x'){try{pcRail.setPointerCapture(d.id)}catch(err){}pcRail.classList.add('grab','drag')}}
+    if(d.ax==='x'){try{pcZone.setPointerCapture(d.id)}catch(err){}pcRail.classList.add('grab','drag')}}
   if(d.ax!=='x')return;
   d.h.push([e.clientX,performance.now()]);if(d.h.length>10)d.h.shift();
   let f=dx/(d.w*.74);if(pcI===0&&f>0||pcI===pcCards.length-1&&f<0)f*=.3;
@@ -1386,8 +1454,8 @@ function pcEnd(e,cancel){const d=pcDs;if(!d||e.pointerId!==d.id)return;pcDs=null
     if(f<-.16||v<-.45)n++;else if(f>.16||v>.45)n--;
     if(Math.abs(dx)>6)pcUp=now}
   pcGo(n)}
-pcRail.addEventListener('pointerup',e=>pcEnd(e,false));
-pcRail.addEventListener('pointercancel',e=>pcEnd(e,true));
+pcZone.addEventListener('pointerup',e=>pcEnd(e,false));
+pcZone.addEventListener('pointercancel',e=>pcEnd(e,true));
 /* a click on the card next to it brings that one in (not straight after a drag) */
 pcCards.forEach((c,i)=>c.addEventListener('click',e=>{if(i===pcI||performance.now()-pcUp<300||e.target.closest('a'))return;pcGo(i)}));
 pcPrev.addEventListener('click',()=>pcGo(pcI-1));
@@ -1502,8 +1570,47 @@ function ppShow(i){if(i===ppI)return;const a=ppI;ppI=i;
   ppTab.forEach((b,k)=>{b.classList.toggle('on',k===i);b.setAttribute('aria-selected',k===i?'true':'false');b.tabIndex=k===i?0:-1});
   ppEdge[0].style.width=(i*2+2)+'px';ppEdge[1].style.width=((4-i)*2+2)+'px';
   ppNow.textContent=ppTab[i].textContent;
-  ppPages.classList.toggle('turn0');ppPages.classList.toggle('turn1');ppPages.scrollTop=0}
+  ppPages.classList.toggle('turn0');ppPages.classList.toggle('turn1');ppPages.scrollTop=0;
+  if(i!==4)ppAudio.pause()}
 ppTab.forEach((b,i)=>b.addEventListener('click',()=>ppShow(i)));
+/* a swipe sideways on the passport (a finger, or a drag with the mouse): to the left for the next tab, to the right for the
+   one before. A push sideways on a trackpad does the same, one push one tab. Not from the tabs or the play buttons */
+let ppSw=null,ppSwT=0,ppWl=0,ppWa=0,ppWu=false;
+const ppStep=d=>ppShow(clamp(ppI+d,0,ppTab.length-1));
+ppBook.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0||e.target.closest('.pp-tab,.pp-play,a'))return;
+  ppSw={x:e.clientX,y:e.clientY,id:e.pointerId}});
+ppBook.addEventListener('pointerup',e=>{const d=ppSw;if(!d||d.id!==e.pointerId)return;ppSw=null;
+  const dx=e.clientX-d.x,dy=e.clientY-d.y;if(Math.abs(dx)<50||Math.abs(dx)<Math.abs(dy)*1.3)return;
+  ppSwT=performance.now();ppStep(dx<0?1:-1)});
+ppBook.addEventListener('pointercancel',()=>{ppSw=null});
+ppBook.addEventListener('wheel',e=>{const m=e.deltaMode===1?16:e.deltaMode===2?VW:1,dx=e.deltaX*m;
+  if(Math.abs(dx)<=Math.abs(e.deltaY*m))return;e.preventDefault();
+  if(e.timeStamp-ppWl>200){ppWu=false;ppWa=0}ppWl=e.timeStamp;if(ppWu)return;
+  ppWa+=dx;if(Math.abs(ppWa)<30)return;ppWu=true;ppStep(ppWa>0?1:-1)},{passive:false});
+/* Traveller: a click on a photo opens it bigger, with the others a step away (not straight after a swipe) */
+const ppPics=$$('.pp-pic',ppBook),ppPicSet=ppPics.map(b=>({n:'My US exchange',media:()=>$('img',b).cloneNode()}));
+ppPics.forEach((b,i)=>b.addEventListener('click',()=>{if(performance.now()-ppSwT<400)return;openBox(i,b,ppPicSet)}));
+/* Music: a song's button plays it (from the file in its data-src), and pauses it when pressed again. While a song plays the
+   record turns and the arm swings over it. Leaving the Music tab, or the section, stops it */
+const ppSongs=$$('.pp-songs li',ppBook),ppNp=$('#ppNp'),ppNpIdle=ppNp.textContent,ppAudio=new Audio();
+let ppSong=-1;ppAudio.preload='none';
+function ppSongUi(){const on=ppSong>=0&&!ppAudio.paused;ppBook.classList.toggle('pp-playing',on);
+  ppSongs.forEach((li,i)=>{const p=on&&i===ppSong;li.classList.toggle('on',p);
+    $('button',li).setAttribute('aria-label',(p?'Pause ':'Play ')+li.dataset.name)});
+  ppNp.textContent=on?'Now playing · '+ppSongs[ppSong].dataset.name:ppNpIdle}
+ppSongs.forEach((li,i)=>$('button',li).addEventListener('click',()=>{
+  if(li.classList.contains('miss'))return;
+  if(i===ppSong&&!ppAudio.paused){ppAudio.pause();return}
+  if(i!==ppSong){ppSong=i;ppAudio.src=li.dataset.src}
+  ppAudio.play().catch(()=>{})}));
+['play','playing','pause','ended'].forEach(t=>ppAudio.addEventListener(t,ppSongUi));
+/* a song whose file is not there yet: its button fades, with "coming soon" */
+/* Education: pointing at a module code, focusing it or tapping it shows its title under the codes, until another is chosen */
+const ppMods=$$('.pp-mod',ppBook),ppModT=$('#ppModT');
+ppMods.forEach(b=>{const show=()=>{ppMods.forEach(o=>o.classList.toggle('on',o===b));ppModT.textContent=b.textContent+' · '+b.dataset.t;ppModT.classList.add('set')};
+  ['pointerenter','focus','click'].forEach(t=>b.addEventListener(t,show))});
+ppAudio.addEventListener('error',()=>{if(ppSong>=0)ppSongs[ppSong].classList.add('miss');ppSong=-1;ppSongUi()});
+new IntersectionObserver(es=>{if(!es[es.length-1].isIntersecting)ppAudio.pause()}).observe(ppBook);
 /* with the keyboard: left and right go to the tab next to it, home and end to the first and the last */
 ppTab[0].parentNode.addEventListener('keydown',e=>{const k=e.key,n=ppTab.length;let i;
   if(k==='ArrowRight')i=(ppI+1)%n;else if(k==='ArrowLeft')i=(ppI+n-1)%n;else if(k==='Home')i=0;else if(k==='End')i=n-1;else return;

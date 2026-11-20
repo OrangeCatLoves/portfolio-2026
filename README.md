@@ -22,8 +22,11 @@ This page is finished. **Do not rewrite it or split it into a framework.** Make 
 | `photos/dog.png` | About me, first card (Professor Woof) | search `hc-dog` |
 | `photos/web/ratchetcat.jpg` | About me, second card (OrangeRatchetCat) | search `hc-cat` |
 | `photos/weibin-2.JPG` | About me passport, the holder's photo on the first page | search `Marina Bay at night` |
-| `photos/weibin-1.JPG` | About me passport, Traveller page, the "Day one" print | search `at the airport` |
-| `photos/Toronto.JPG` | About me passport, Traveller page, the "Toronto" print | search `Niagara Falls` |
+| 6 photos in `photos/web/aboutme/` | About me passport, Traveller page (left), the scattered prints | search `class="pp-album"` |
+| `photos/gamer/valorant-logo.svg` | About me passport, Gamer page (left) | search `valorant-logo` |
+| `photos/gamer/overwatch-logo.png`, `photos/gamer/widowmaker.webp` | About me passport, Gamer page (right) | search `overwatch-logo` |
+| `videos/valorant-gameplay.mp4`, `videos/overwatch-gameplay.mp4` (not added yet) | About me passport, Gamer pages, the clip at the bottom | search `gameplay clip` |
+| 7 songs in `audio/` (not added yet), e.g. `audio/starboy.mp3` | About me passport, Music page, the play buttons | search `class="pp-songs"` |
 | `logos/shopback.jpg` | Experience, ShopBack boarding pass | search `logos/shopback` |
 | `logos/continental.jpg` | Experience, Continental (AUMOVIO) boarding pass | search `logos/continental` |
 | `logos/growthbeans.jpg` | Experience, Growthbeans boarding pass | search `logos/growthbeans` |
@@ -45,6 +48,9 @@ UMD (University of Maryland), Washington D.C., Philadelphia, New York, Boston, T
 - **Company logo:** change the `data-src` of the `<img>` inside `<span class="pass-logo nologo">`. The page loads it and only shows the logo once it has loaded, so a missing file hides the logo instead of showing a broken image.
 - **Internship photos:** put the files in `photos/internships/` with the names above, or change the `data-src` of each `<img>` inside `<div class="snaps">`. One `<img>` per photo: add or remove lines to change how many there are, and the button's count follows. Until a file is there, its print shows a striped "Photo N". `data-cap="..."` on an `<img>` gives that print its own short caption instead of "1 / 5". Use web-sized copies (about 1600 px on the long side), like the ones in `photos/web/`.
 - **Exchange photo:** replace `<span class="slot">Photo</span>` inside the button with `<img src="photos/FILE" alt="PLACE NAME">`. Keep the caption span after it.
+- **About me photos (Traveller):** the page shows the web-sized copies in `photos/web/aboutme/` (about 1600 px, turned upright). The full-size originals stay in `photos/aboutme/`, which git ignores. To swap one, make a web-sized copy and change the `src` of its `<img>` inside `<div class="pp-album">`.
+- **Gameplay clip:** replace the whole `<div class="pp-clip pp-clip-ph">…</div>` with `<video class="pp-clip" src="videos/FILE" autoplay muted loop playsinline></video>` (the comment above each one has the exact line). Keep each video under 25 MB.
+- **Song:** put the audio file in `audio/` with the name in that song's `data-src` (for example `audio/starboy.mp3`), or change the `data-src`. `.mp3`, `.m4a` and `.mp4` all play. Until the file is there, its play button is faded with "coming soon". To add a song, copy one `<li>` and change its `data-src`, `data-name` and title.
 - **Video:** change the `src` of the `<video>` on that project's postcard (search its file name, as in the table above). Keep `autoplay muted loop playsinline`.
 
 The page already crops every photo to fit its frame, so no extra styling is needed.
