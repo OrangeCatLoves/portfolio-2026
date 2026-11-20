@@ -422,10 +422,12 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 .pp-wx img{display:block;width:70px;height:auto;max-height:28px;object-fit:contain;object-position:left center;mix-blend-mode:multiply}
 .pp-wx b,.pp-visa-f dd b{font-weight:700;color:#17265A}
 /* Education: the degree, then the module codes by genre (Foundations, Systems & Software, Math & Stats, Others), each genre in its own ink */
-.pp-edu{display:grid;grid-template-columns:74px minmax(0,1fr);align-items:center;column-gap:8px}
-.pp-edu-dt{display:flex;justify-content:space-between;align-items:baseline}
+.pp-edu{display:grid;grid-template-columns:74px minmax(0,1fr) auto;align-items:center;column-gap:8px}
+/* the teaching assistant row: its logo sits level with the role, under the dates */
+.pp-wx-ta img{align-self:end;margin-bottom:1px}
 .pp-edu img{display:block;width:70px;height:auto;max-height:28px;object-fit:contain;object-position:left center;mix-blend-mode:multiply}
-.pp-edu-y{letter-spacing:.08em;text-transform:none}
+.pp-edu-n{font-size:12.5px;white-space:nowrap}
+.pp-edu-y{font-family:var(--mono);font-weight:500;font-size:9px;letter-spacing:.04em;margin-left:6px;color:#5B6790;white-space:nowrap}
 .pp-edu-d{display:block;margin:2px 0 0 82px;font-weight:500;font-size:12.5px;line-height:1.35;color:#2E3B6B}
 .pp-mods{display:grid;gap:6px;margin-top:9px}
 .pp-mg{display:grid;grid-template-columns:74px minmax(0,1fr);column-gap:8px;align-items:start}
@@ -614,6 +616,7 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
   .pp-setl li{font-size:20px;white-space:nowrap}
   .pp-wx img{width:62px}
   .pp-edu img{width:62px}
+  .pp-edu-n{white-space:normal}
   .pp-clip{height:auto;aspect-ratio:16/9;margin-top:16px}
   .pp-widow{height:210px;top:34px}
   .lt{grid-template-columns:minmax(0,1fr);gap:16px;padding:10vh 6vw 6vh;align-content:center}
@@ -1013,12 +1016,12 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
                   <li><img src="logos/shopback.jpg" alt="ShopBack"><span>January 2027 – June 2027 <b>@ShopBack</b></span></li>
                   <li><img src="logos/continental.jpg" alt="Continental"><span>June 2026 – December 2026 <b>@Continental</b></span></li>
                   <li><img src="logos/growthbeans.jpg" alt="Growthbeans"><span>May 2025 – August 2025 <b>@Growthbeans</b></span></li>
-                  <li><img src="logos/nus.jpg" alt="NUS"><span>January 2026 – November 2026 <b>@NUS</b><br>Teaching Assistant, CS4218 - Software Testing</span></li>
+                  <li class="pp-wx-ta"><img src="logos/nus.jpg" alt="NUS"><span>January 2026 – November 2026 <b>@NUS</b><br>Teaching Assistant, CS4218 - Software Testing</span></li>
                 </ul>
               </dd></div>
               <!-- Education: point at (or tap) a module code and its title shows in the line under the codes -->
-              <div><dt class="pp-edu-dt">Education<span class="pp-edu-y">2023 – 2027</span></dt><dd>
-                <span class="pp-edu"><img src="logos/nus.jpg" alt=""><span class="pp-edu-n">National University of Singapore</span></span>
+              <div><dt>Education</dt><dd>
+                <span class="pp-edu"><img src="logos/nus.jpg" alt=""><span class="pp-edu-n">National University of Singapore</span><span class="pp-edu-y">2023 – 2027</span></span>
                 <span class="pp-edu-d">Bachelor of Computing, Computer Science</span>
                 <div class="pp-mods" aria-label="Modules, by genre">
                   <div class="pp-mg g-f"><span class="pp-mg-l">Foundations</span><ul><li><button class="pp-mod" type="button" data-t="Programming Methodology">CS1101S</button></li><li><button class="pp-mod" type="button" data-t="Discrete Structures">CS1231S</button></li><li><button class="pp-mod" type="button" data-t="Programming Methodology II">CS2030S</button></li><li><button class="pp-mod" type="button" data-t="Data Structures and Algorithms">CS2040S</button></li><li><button class="pp-mod" type="button" data-t="Database Systems">CS2102</button></li><li><button class="pp-mod" type="button" data-t="Introduction to Computer Networks">CS2105</button></li></ul></div>
