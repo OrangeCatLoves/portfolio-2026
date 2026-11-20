@@ -23,3 +23,6 @@ $RECYCLE.BIN/
 /photos/Miami.JPG
 /photos/weibin-3.JPG
 /photos/ratchetcat.png
+
+# Full-size video original. The page uses the compressed copy, videos/minitude.mp4 (Cloudflare refuses files over 25 MB)
+/videos/minitude-original.mp4
