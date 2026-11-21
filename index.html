@@ -441,6 +441,11 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 .pp-mod-t{margin:8px 0 0 82px;min-height:1.4em;font-size:12px;line-height:1.4;color:#5B6790}
 .pp-mod-t.set{font-weight:700;color:#17265A}.pp-places{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;align-content:flex-start}
 .pp-places{gap:10px 7px;padding:2px 0}
+.pp-pgc{display:grid;gap:14px}
+.pp-pg-c .pp-sg-l{margin-bottom:9px}
+.pp-pg-c .pp-places{justify-content:flex-start;padding:2px 6px}
+/* Canada and Taiwan share a line, each with its own label */
+.pp-pgc-2{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px}
 .pp-places .pp-st{position:relative}
 /* Familiar with: a small label and a dashed rule for each kind, then its stamps */
 .pp-stk{display:grid;gap:18px}
@@ -1082,26 +1087,13 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
         <div class="pp-pg pp-ff" data-t="2" aria-hidden="true">
           <div class="pp-in">
             <div class="pp-hd"><span>Places visited</span><span>Stamps</span></div>
-            <div class="pp-places">
-              <span class="pp-st ink-n" style="rotate:-6deg">Los Angeles<small>California</small></span>
-              <span class="pp-st ov ink-r" style="rotate:5deg">San Francisco<small>California</small></span>
-              <span class="pp-st ink-g" style="rotate:-3deg">Yosemite<small>California</small></span>
-              <span class="pp-st ov ink-p" style="rotate:7deg">Seattle<small>Washington</small></span>
-              <span class="pp-st ink-b" style="rotate:-5deg">University of Maryland<small>Maryland</small></span>
-              <span class="pp-st ink-n" style="rotate:4deg">New York City<small>New York</small></span>
-              <span class="pp-st ov ink-r" style="rotate:-8deg">Washington D.C.<small>USA</small></span>
-              <span class="pp-st ink-g" style="rotate:6deg">Philadelphia<small>Pennsylvania</small></span>
-              <span class="pp-st ov ink-p" style="rotate:-4deg">Baltimore<small>Maryland</small></span>
-              <span class="pp-st ink-b" style="rotate:3deg">Boston<small>Massachusetts</small></span>
-              <span class="pp-st ov ink-n" style="rotate:-7deg">Chicago<small>Illinois</small></span>
-              <span class="pp-st ink-r" style="rotate:5deg">Orlando<small>Florida</small></span>
-              <span class="pp-st ov ink-g" style="rotate:-2deg">Miami<small>Florida</small></span>
-              <span class="pp-st ink-p" style="rotate:6deg">Las Vegas<small>Nevada</small></span>
-              <span class="pp-st ink-b" style="rotate:-5deg">The Grand Canyon<small>Arizona</small></span>
-              <span class="pp-st ov ink-n" style="rotate:8deg">Toronto<small>Ontario</small></span>
-              <span class="pp-st ink-r" style="rotate:-4deg">Niagara Falls<small>Ontario</small></span>
-              <span class="pp-st ov ink-g" style="rotate:3deg">Loudoun<small>Virginia</small></span>
-              <span class="pp-st ci ink-p" style="rotate:-6deg">Taiwan</span>
+            <!-- the places, by country. In the United States, one state's stamps sit side by side, roughly west to east -->
+            <div class="pp-pgc">
+              <div class="pp-pg-c"><p class="pp-sg-l">United States</p><div class="pp-places"><span class="pp-st ink-n" style="rotate:-6deg">San Francisco<small>California</small></span><span class="pp-st ov ink-r" style="rotate:5deg">Yosemite<small>California</small></span><span class="pp-st ink-g" style="rotate:-3deg">Los Angeles<small>California</small></span><span class="pp-st ov ink-p" style="rotate:7deg">Seattle<small>Washington</small></span><span class="pp-st ink-b" style="rotate:-5deg">Las Vegas<small>Nevada</small></span><span class="pp-st ov ink-n" style="rotate:4deg">The Grand Canyon<small>Arizona</small></span><span class="pp-st ink-r" style="rotate:-8deg">Chicago<small>Illinois</small></span><span class="pp-st ov ink-g" style="rotate:6deg">Orlando<small>Florida</small></span><span class="pp-st ink-p" style="rotate:-4deg">Miami<small>Florida</small></span><span class="pp-st ov ink-b" style="rotate:3deg">Loudoun<small>Virginia</small></span><span class="pp-st ink-n" style="rotate:-7deg">University of Maryland<small>Maryland</small></span><span class="pp-st ov ink-r" style="rotate:5deg">Baltimore<small>Maryland</small></span><span class="pp-st ink-g" style="rotate:-2deg">Washington D.C.<small>USA</small></span><span class="pp-st ov ink-p" style="rotate:6deg">Philadelphia<small>Pennsylvania</small></span><span class="pp-st ink-b" style="rotate:-5deg">New York City<small>New York</small></span><span class="pp-st ov ink-n" style="rotate:8deg">Boston<small>Massachusetts</small></span></div></div>
+              <div class="pp-pgc-2">
+                <div class="pp-pg-c"><p class="pp-sg-l">Canada</p><div class="pp-places"><span class="pp-st ink-r" style="rotate:-6deg">Toronto<small>Ontario</small></span><span class="pp-st ov ink-g" style="rotate:5deg">Niagara Falls<small>Ontario</small></span></div></div>
+                <div class="pp-pg-c"><p class="pp-sg-l">Taiwan</p><div class="pp-places"><span class="pp-st ci ink-p" style="rotate:-3deg">Taiwan</span></div></div>
+              </div>
             </div>
           </div>
           <span class="pp-pn">06</span>
