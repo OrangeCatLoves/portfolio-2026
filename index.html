@@ -1623,7 +1623,7 @@ function ppSongUi(){const on=ppSong>=0&&!ppAudio.paused;ppBook.classList.toggle(
 ppSongs.forEach((li,i)=>$('button',li).addEventListener('click',()=>{
   if(li.classList.contains('miss'))return;
   if(i===ppSong&&!ppAudio.paused){ppAudio.pause();return}
-  if(i!==ppSong){ppSong=i;ppAudio.src=li.dataset.src}
+  if(i!==ppSong){ppSong=i;ppSeekTo=-1;ppDur=NaN;ppAudio.src=li.dataset.src}
   ppEqWire();if(ppCtx&&ppCtx.state==='suspended')ppCtx.resume();
   ppAudio.play().catch(()=>{})}));
 ['play','playing','pause','ended'].forEach(t=>ppAudio.addEventListener(t,ppSongUi));
@@ -1636,7 +1636,8 @@ const ppTime=t=>{t=isFinite(t)?Math.max(0,Math.floor(t)):0;return Math.floor(t/6
 function ppEqWire(){if(ppCtx||!/^https?:$/.test(location.protocol))return;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
   try{const c=new AC(),a=c.createAnalyser();a.fftSize=256;a.smoothingTimeConstant=.78;c.createMediaElementSource(ppAudio).connect(a);a.connect(c.destination);
     ppCtx=c;ppAn=a;ppBins=new Uint8Array(a.frequencyBinCount)}catch(e){}}
-function ppEqText(){const d=ppAudio.duration,t=ppAudio.currentTime;ppEqT.textContent=ppTime(t);ppEqD.textContent=ppTime(d);
+let ppDur=NaN;
+function ppEqText(){const d=isFinite(ppAudio.duration)?(ppDur=ppAudio.duration):ppDur,t=ppSeekTo>=0?ppSeekTo:ppAudio.currentTime;ppEqT.textContent=ppTime(t);ppEqD.textContent=ppTime(d);
   ppEqF.style.width=(isFinite(d)&&d>0?Math.min(100,t/d*100):0).toFixed(2)+'%';
   ppEqN.textContent=ppSong>=0?ppSongs[ppSong].dataset.name:'Press play on a song'}
 function ppEqDraw(now){ppEqRaf=0;const on=!ppAudio.paused&&ppSong>=0;
@@ -1658,8 +1659,20 @@ function ppEqDraw(now){ppEqRaf=0;const on=!ppAudio.paused&&ppSong>=0;
 const ppEqGo=()=>{if(!ppEqRaf)ppEqRaf=requestAnimationFrame(ppEqDraw)};
 ['play','playing','pause','ended','loadedmetadata','seeked'].forEach(t=>ppAudio.addEventListener(t,ppEqGo));
 ppAudio.addEventListener('timeupdate',ppEqText);
+/* jumping within a song. The host sends each file whole (it does not answer the requests for a part of a file that a
+   browser makes to jump ahead), so the first jump in a song loads the whole file into memory (usually straight from the
+   browser's cache, as it has just been played) and plays it from there, where any jump works. Until it is ready the
+   line shows where it is going */
+const ppMem={};let ppSeekTo=-1;
+const ppWhole=src=>ppMem[src]||(ppMem[src]=fetch(src).then(r=>{if(!r.ok)throw 0;return r.blob()}).then(b=>URL.createObjectURL(b)).catch(e=>{delete ppMem[src];throw e}));
+function ppJump(t){const i=ppSong,src=ppSongs[i].dataset.src;
+  if(ppAudio.src.startsWith('blob:')){ppAudio.currentTime=t;return}
+  const go=!ppAudio.paused;ppSeekTo=t;ppEqText();
+  ppWhole(src).then(u=>{if(ppSong!==i||ppSeekTo<0)return;
+    ppAudio.addEventListener('loadedmetadata',()=>{ppAudio.currentTime=ppSeekTo;ppSeekTo=-1;if(go)ppAudio.play().catch(()=>{});ppEqText()},{once:true});
+    ppAudio.src=u}).catch(()=>{ppSeekTo=-1;ppAudio.currentTime=t})}
 ppEqP.addEventListener('click',e=>{const d=ppAudio.duration;if(!isFinite(d)||ppSong<0)return;const r=ppEqP.getBoundingClientRect();
-  ppAudio.currentTime=clamp((e.clientX-r.left)/r.width)*d;ppEqText()});
+  ppJump(clamp((e.clientX-r.left)/r.width)*d);ppEqText()});
 requestAnimationFrame(ppEqDraw);
 /* a song whose file is not there yet: its button fades, with "coming soon" */
 /* Education: pointing at a module code, focusing it or tapping it shows its title under the codes, until another is chosen */
