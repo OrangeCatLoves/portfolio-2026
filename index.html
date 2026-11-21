@@ -447,23 +447,24 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 .pp-sg-l{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-family:var(--mono);font-weight:500;font-size:9px;line-height:1;letter-spacing:.16em;text-transform:uppercase;color:#5B6790}
 .pp-sg-l::after{content:"";flex:1;border-top:1px dashed rgba(122,111,85,.4)}
 .pp-sg-s{display:flex;flex-wrap:wrap;align-items:center;gap:12px 12px;padding:0 4px}
-.pp-sg .pp-st{position:relative;padding:7px 12px;font-size:12px}
+.pp-sg .pp-st{position:relative;padding:7px 12px;font-size:12.5px}
 .pp-sg .pp-st.ov{padding:10px 16px}
 .pp-sg .pp-st.ci{width:58px;height:58px;padding:0}
 /* a group of four: two stamps a row, in two columns, so neither row is left with one */
 .pp-sg-2{display:grid;grid-template-columns:repeat(2,max-content);justify-items:start}
-.pp-places .pp-st{padding:6px 9px;font-size:10.5px;letter-spacing:.1em}
-.pp-places .pp-st small{margin-top:2px;font-size:7px;letter-spacing:.16em}
+.pp-places .pp-st{padding:6px 9px;font-size:11px;letter-spacing:.1em}
+.pp-places .pp-st small{margin-top:2px;font-size:8px;letter-spacing:.14em}
 .pp-places .pp-st.ov{padding:9px 13px}
 .pp-places .pp-st.ci{width:64px;height:64px;padding:0}
 /* a rubber stamp: a ring of ink (an inner ring too), a little rough (the filter above) */
-.pp-st{position:absolute;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 12px;border:2.5px solid currentColor;border-radius:4px;font-family:var(--mono);font-weight:500;font-size:13px;line-height:1.1;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:var(--sc);opacity:.86;mix-blend-mode:multiply;filter:url(#pp-ink);box-shadow:inset 0 0 0 2px #F6F0DF,inset 0 0 0 3.5px currentColor}
+.pp-st{position:absolute;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 12px;border:2.5px solid transparent;border-radius:4px;font-family:var(--mono);font-weight:500;font-size:13px;line-height:1.1;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:var(--sc)}
+/* the ring of ink is rough at the edges (the filter above); the words are left sharp, so they read */
+.pp-st::before{content:"";position:absolute;inset:-2.5px;border:2.5px solid currentColor;border-radius:inherit;box-shadow:inset 0 0 0 2px #F6F0DF,inset 0 0 0 3.5px currentColor;opacity:.86;mix-blend-mode:multiply;filter:url(#pp-ink);pointer-events:none}
 .pp-st small{margin-top:3px;font-size:8px;letter-spacing:.2em}
 .pp-st.ov{border-radius:50%;padding:12px 18px}
 .pp-st.ci{width:74px;height:74px;padding:0;border-radius:50%}
 .pp-st.xl{font-size:17px;padding:16px 24px}
 .pp-st.ink-n{--sc:#1F3A8A}.pp-st.ink-r{--sc:#B8322A}.pp-st.ink-g{--sc:#2E7D5B}.pp-st.ink-p{--sc:#6B3FA0}.pp-st.ink-b{--sc:#8A5A2B}
-.pp-st.dash{border-style:dashed;border-width:2px;color:#8A8F9E;opacity:1;filter:none;mix-blend-mode:normal;box-shadow:none;font-family:var(--hand);font-weight:600;font-size:19px;line-height:1.1;letter-spacing:0;text-transform:none}
 /* Traveller */
 .pp-tv-h{margin:2px 0 16px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;line-height:1.22;color:#17265A}
 .pp-album{position:relative;width:100%;aspect-ratio:366/362}
@@ -620,6 +621,7 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
   .ab-cards{--k:.5;height:276px}
   .pp-visa-pg .pp-in{padding-left:42px}
   .pp-focus{flex-direction:column}
+  .pp-sg .pp-st{font-size:12px}
   .pp-focus span+span::before{content:none}
   .pp-gm-st .pp-st+.pp-st{left:auto!important;right:6px}
   .pp-setl li{font-size:20px;white-space:nowrap}
