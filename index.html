@@ -520,6 +520,25 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
 .pp-songs li.miss .pp-play{opacity:.35;cursor:default;transform:none}
 .pp-songs li.miss::after{content:"coming soon";margin-left:auto;font-family:var(--mono);font-weight:500;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:#A39A80}
 .pp-setl li::before{content:counter(pps,decimal-leading-zero);margin-right:10px;font-family:var(--mono);font-weight:500;font-size:10px;line-height:1;color:#D7332F;vertical-align:middle}
+/* the now-playing panel: a dark strip under the list, bars in gold and red */
+.pp-eq{margin:22px 6px 0;padding:12px 14px 11px;border-radius:8px;background:linear-gradient(160deg,#1C2B66,#0E1740);box-shadow:0 10px 20px -10px rgba(10,19,51,.7),inset 0 0 0 1px rgba(255,255,255,.06)}
+.pp-eq-hd{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+.pp-eq-l{flex:none;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-weight:500;font-size:9px;line-height:1;letter-spacing:.16em;text-transform:uppercase;color:rgba(201,208,236,.6)}
+.pp-eq-l::before{content:"";width:6px;height:6px;border-radius:50%;background:rgba(201,208,236,.35)}
+.pp-playing .pp-eq-l{color:#F2C14E}
+.pp-playing .pp-eq-l::before{background:#D7332F;box-shadow:0 0 0 3px rgba(215,51,47,.25);animation:ppLive 1.2s ease-in-out infinite}
+.pp-eq-n{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--hand);font-weight:600;font-size:19px;line-height:1;color:#FFFEF8}
+.pp-eq-c{display:block;width:100%;height:56px}
+.pp-eq-ft{display:flex;align-items:center;gap:10px;margin-top:8px}
+.pp-eq-t{flex:none;min-width:30px;font-family:var(--mono);font-weight:500;font-size:9.5px;line-height:1;letter-spacing:.04em;color:rgba(201,208,236,.75)}
+.pp-eq-t:last-child{text-align:right}
+.pp-eq-p{position:relative;flex:1;height:14px;cursor:pointer}
+.pp-eq-p::before,.pp-eq-p i{content:"";position:absolute;left:0;top:6px;height:2px;border-radius:2px}
+.pp-eq-p::before{right:0;background:rgba(201,208,236,.22)}
+.pp-eq-p i{width:0;background:linear-gradient(90deg,#F2C14E,#D7332F)}
+.pp-eq-p i::after{content:"";position:absolute;right:-4px;top:-3px;width:8px;height:8px;border-radius:50%;background:#FFFEF8;opacity:0;transition:opacity .2s}
+.pp-playing .pp-eq-p i::after{opacity:1}
+@keyframes ppLive{50%{box-shadow:0 0 0 5px rgba(215,51,47,0)}}
 .pp-tape{position:absolute;width:72px;height:20px;background:rgba(238,224,178,.78);box-shadow:0 1px 2px rgba(0,0,0,.08)}
 .pp-tape.t1{left:-16px;top:-8px;rotate:-24deg}.pp-tape.t2{right:-14px;top:-6px;rotate:18deg}
 @keyframes ppSpin{to{transform:rotate(360deg)}}
@@ -1156,8 +1175,16 @@ h2.t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,76px);lin
                 <li data-src="audio/save-your-tears.mp3" data-name="Save Your Tears"><button class="pp-play" type="button" aria-label="Play Save Your Tears"></button><span>Save Your Tears</span></li>
                 <li data-src="audio/sao-paulo.mp3" data-name="São Paulo"><button class="pp-play" type="button" aria-label="Play São Paulo"></button><span>São Paulo</span></li>
                 <li data-src="audio/love-me-harder.mp3" data-name="Love Me Harder"><button class="pp-play" type="button" aria-label="Play Love Me Harder"></button><span>Love Me Harder</span></li>
+                <li data-src="audio/one-of-the-girls.mp3" data-name="One Of The Girls"><button class="pp-play" type="button" aria-label="Play One Of The Girls"></button><span>One Of The Girls</span></li>
                 <li data-src="audio/gameboy.mp3" data-name="Gameboy"><button class="pp-play" type="button" aria-label="Play Gameboy"></button><span>Gameboy <small>Katseye</small></span></li>
               </ol>
+            </div>
+            <!-- now playing: the bars move with the song (read live from the audio), a line shows how far in it is (a click
+                 on it jumps there) -->
+            <div class="pp-eq" id="ppEq">
+              <div class="pp-eq-hd"><span class="pp-eq-l">On air</span><span class="pp-eq-n" id="ppEqN">Press play on a song</span></div>
+              <canvas class="pp-eq-c" id="ppEqC" aria-hidden="true"></canvas>
+              <div class="pp-eq-ft"><span class="pp-eq-t" id="ppEqT">0:00</span><div class="pp-eq-p" id="ppEqP"><i id="ppEqF"></i></div><span class="pp-eq-t" id="ppEqD">0:00</span></div>
             </div>
           </div>
           <span class="pp-pn">10</span>
@@ -1597,8 +1624,43 @@ ppSongs.forEach((li,i)=>$('button',li).addEventListener('click',()=>{
   if(li.classList.contains('miss'))return;
   if(i===ppSong&&!ppAudio.paused){ppAudio.pause();return}
   if(i!==ppSong){ppSong=i;ppAudio.src=li.dataset.src}
+  ppEqWire();if(ppCtx&&ppCtx.state==='suspended')ppCtx.resume();
   ppAudio.play().catch(()=>{})}));
 ['play','playing','pause','ended'].forEach(t=>ppAudio.addEventListener(t,ppSongUi));
+/* the now-playing panel. The bars read the song itself (a Web Audio analyser, set up on the first press of play, as the
+   browser asks). Opened from a file on disk instead of a web address, the browser would mute audio sent through the
+   analyser, so there the bars stay still and the song plays as before */
+const ppEqC=$('#ppEqC'),ppEqN=$('#ppEqN'),ppEqT=$('#ppEqT'),ppEqD=$('#ppEqD'),ppEqP=$('#ppEqP'),ppEqF=$('#ppEqF'),PP_BARS=34;
+let ppCtx=null,ppAn=null,ppBins=null,ppEqRaf=0,ppEqLast=0;const ppLv=new Float32Array(PP_BARS),ppPk=new Float32Array(PP_BARS);
+const ppTime=t=>{t=isFinite(t)?Math.max(0,Math.floor(t)):0;return Math.floor(t/60)+':'+String(t%60).padStart(2,'0')};
+function ppEqWire(){if(ppCtx||!/^https?:$/.test(location.protocol))return;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  try{const c=new AC(),a=c.createAnalyser();a.fftSize=256;a.smoothingTimeConstant=.78;c.createMediaElementSource(ppAudio).connect(a);a.connect(c.destination);
+    ppCtx=c;ppAn=a;ppBins=new Uint8Array(a.frequencyBinCount)}catch(e){}}
+function ppEqText(){const d=ppAudio.duration,t=ppAudio.currentTime;ppEqT.textContent=ppTime(t);ppEqD.textContent=ppTime(d);
+  ppEqF.style.width=(isFinite(d)&&d>0?Math.min(100,t/d*100):0).toFixed(2)+'%';
+  ppEqN.textContent=ppSong>=0?ppSongs[ppSong].dataset.name:'Press play on a song'}
+function ppEqDraw(now){ppEqRaf=0;const on=!ppAudio.paused&&ppSong>=0;
+  if(reduce&&on&&now-ppEqLast<160){ppEqRaf=requestAnimationFrame(ppEqDraw);return}ppEqLast=now;
+  const k=ppEqC.getBoundingClientRect().width/(ppEqC.clientWidth||1)*(window.devicePixelRatio||1),W=Math.round(ppEqC.clientWidth*k),H=Math.round(ppEqC.clientHeight*k);
+  if(!W||!H)return;if(ppEqC.width!==W||ppEqC.height!==H){ppEqC.width=W;ppEqC.height=H}
+  if(on&&ppAn)ppAn.getByteFrequencyData(ppBins);
+  let moving=false;const g=ppEqC.getContext('2d'),gap=W/PP_BARS*.32,bw=W/PP_BARS-gap,base=H-1*k;
+  g.clearRect(0,0,W,H);const grad=g.createLinearGradient(0,base,0,0);grad.addColorStop(0,'#D7332F');grad.addColorStop(.55,'#E9783C');grad.addColorStop(1,'#F2C14E');
+  for(let i=0;i<PP_BARS;i++){
+    /* the bars spread over the low and middle of the sound, where most of a song is (more bars for the bass) */
+    let v=0;if(on&&ppAn){const a=Math.floor(Math.pow(i/PP_BARS,1.6)*58)+1,b=Math.max(a+1,Math.floor(Math.pow((i+1)/PP_BARS,1.6)*58)+1);
+      for(let j=a;j<b;j++)v=Math.max(v,ppBins[j]);v=Math.min(1,Math.pow(v/255,1.35)*(1+i/PP_BARS*.9))}
+    ppLv[i]+=(v-ppLv[i])*(v>ppLv[i]?.6:.14);ppPk[i]=Math.max(ppPk[i]-.012,ppLv[i]);if(ppLv[i]>.004||ppPk[i]>.004)moving=true;
+    const x=i*(bw+gap)+gap/2,h=Math.max(2*k,ppLv[i]*(H-6*k));
+    g.fillStyle=on||ppLv[i]>.004?grad:'rgba(201,208,236,.28)';g.beginPath();g.roundRect(x,base-h,bw,h,Math.min(bw/2,2*k));g.fill();
+    if(ppPk[i]>.02){g.fillStyle='rgba(255,254,248,.85)';g.fillRect(x,base-ppPk[i]*(H-6*k)-3*k,bw,1.5*k)}}
+  ppEqText();if(on||moving)ppEqRaf=requestAnimationFrame(ppEqDraw)}
+const ppEqGo=()=>{if(!ppEqRaf)ppEqRaf=requestAnimationFrame(ppEqDraw)};
+['play','playing','pause','ended','loadedmetadata','seeked'].forEach(t=>ppAudio.addEventListener(t,ppEqGo));
+ppAudio.addEventListener('timeupdate',ppEqText);
+ppEqP.addEventListener('click',e=>{const d=ppAudio.duration;if(!isFinite(d)||ppSong<0)return;const r=ppEqP.getBoundingClientRect();
+  ppAudio.currentTime=clamp((e.clientX-r.left)/r.width)*d;ppEqText()});
+requestAnimationFrame(ppEqDraw);
 /* a song whose file is not there yet: its button fades, with "coming soon" */
 /* Education: pointing at a module code, focusing it or tapping it shows its title under the codes, until another is chosen */
 const ppMods=$$('.pp-mod',ppBook),ppModT=$('#ppModT');

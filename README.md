@@ -26,7 +26,7 @@ This page is finished. **Do not rewrite it or split it into a framework.** Make 
 | `photos/gamer/valorant-logo.svg` | About me passport, Gamer page (left) | search `valorant-logo` |
 | `photos/gamer/overwatch-logo.png`, `photos/gamer/widowmaker.webp` | About me passport, Gamer page (right) | search `overwatch-logo` |
 | `videos/valorant-gameplay.mp4`, `videos/overwatch-gameplay.mp4` (not added yet) | About me passport, Gamer pages, the clip at the bottom | search `gameplay clip` |
-| 7 songs in `audio/` (not added yet), e.g. `audio/starboy.mp3` | About me passport, Music page, the play buttons | search `class="pp-songs"` |
+| 8 songs in `audio/`, e.g. `audio/starboy.mp3` | About me passport, Music page, the play buttons and the "On air" panel under them | search `class="pp-songs"` |
 | `logos/shopback.jpg` | Experience, ShopBack boarding pass | search `logos/shopback` |
 | `logos/continental.jpg` | Experience, Continental (AUMOVIO) boarding pass | search `logos/continental` |
 | `logos/growthbeans.jpg` | Experience, Growthbeans boarding pass | search `logos/growthbeans` |
